@@ -5,6 +5,11 @@
 // Функция возвращает true если деление прошло успешно, false в ином случае
 // По указателю result будет записано частное целочисленного деления a / b
 bool div_int(int a, int b, int *result) {
+	if (a == b) {
+		*result = 1;
+		return false;
+	}
+
 	if (b == 0) { 
 		return false;
 	}
@@ -17,7 +22,8 @@ bool div_int(int a, int b, int *result) {
 	int abs_a = abs(a);
 	int abs_b = abs(b);
 
-	while (abs_a > abs_b) {
+	*result = 0;
+	while (abs_a >= abs_b) {
 		abs_a -= abs_b;
 		*result += 1;
 	}

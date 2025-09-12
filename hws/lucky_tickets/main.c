@@ -1,18 +1,19 @@
 #include <stdio.h>
+#include <strings.h>
 
 int main() {
-	int n = 0;
+	int sums[28] = {0};
 
 	for (int a = 0; a <= 9; a++)
 		for (int b = 0; b <= 9; b++)
 			for (int c = 0; c <= 9; c++)
-				for (int d = 0; d <= 9; d++)
-					for (int e = 0; e <= 9; e++)
-						for (int f = 0; f <= 9; f++) {
-							if (a+b+c == d+e+f) {
-								n += 1;
-							}
-						} 
+				sums[a+b+c] += 1;
+	
+	int n = 0;
+
+	for (int i = 0; i < 28; i++) {
+		n += sums[i] * sums[i];
+	}
 
 	printf("%d\n", n);
 }

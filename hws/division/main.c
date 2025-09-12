@@ -7,7 +7,7 @@
 bool div_int(int a, int b, int *result) {
 	if (a == b) {
 		*result = 1;
-		return false;
+		return true;
 	}
 
 	if (b == 0) { 

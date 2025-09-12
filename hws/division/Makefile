@@ -1,0 +1,12 @@
+build/main.o: main.c
+	mkdir -p ./build
+	gcc -o ./build/main.o -c main.c
+
+build/program: build/main.o
+	mkdir -p ./build
+	gcc -o ./build/program ./build/main.o
+
+run: build/program
+	./build/program
+
+build: build/program

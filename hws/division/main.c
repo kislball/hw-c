@@ -1,59 +1,63 @@
-#include <stdlib.h>
-#include <stdio.h>
 #include <stdbool.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 // Функция возвращает true если деление прошло успешно, false в ином случае
 // По указателю result будет записано частное целочисленного деления a / b
-bool div_int(int a, int b, int *result) {
-	if (a == b) {
-		*result = 1;
-		return true;
-	}
+bool div_int(int a, int b, int* result)
+{
+    if (a == b) {
+        *result = 1;
+        return true;
+    }
 
-	if (b == 0) { 
-		return false;
-	}
+    if (b == 0) {
+        return false;
+    }
 
-	if (a == 0) {
-		*result = 0;
-		return true;
-	}
+    if (a == 0) {
+        *result = 0;
+        return true;
+    }
 
-	int abs_a = abs(a);
-	int abs_b = abs(b);
+    int abs_a = abs(a);
+    int abs_b = abs(b);
 
-	*result = 0;
-	while (abs_a >= abs_b) {
-		abs_a -= abs_b;
-		*result += 1;
-	}
+    *result = 0;
+    while (abs_a >= abs_b) {
+        abs_a -= abs_b;
+        *result += 1;
+    }
 
-	if (a*b < 0) {
-		*result += 1;
-		*result *= -1;	
-	}
+    if (a * b < 0) {
+        *result += 1;
+        *result *= -1;
+    }
 
-	return true;
+    return true;
 }
 
-void div_and_print(int a, int b) {
-	int result = 0;
-	if (div_int(a, b, &result)) {
-		printf("%d // %d = %d\n", a, b, result);
-	} else {
-		printf("Деление невозможно\n");
-	}
+void div_and_print(int a, int b)
+{
+    int result = 0;
+    if (div_int(a, b, &result)) {
+        printf("%d // %d = %d\n", a, b, result);
+    } else {
+        printf("Деление невозможно\n");
+    }
 }
 
-int prompt(char *data) {
-	int ans = 0;
-	printf("%s", data);
-	scanf("%d", &ans);
-	return ans;
+int prompt(char* data)
+{
+    int ans = 0;
+    printf("%s", data);
+    scanf("%d", &ans);
+    return ans;
 }
 
-int main() {
-	int a = prompt("Введите делимое: ");
-	int b = prompt("Введите делитель: ");
-	div_and_print(a, b);
+int main()
+{
+    int a = prompt("Введите делимое: ");
+    int b = prompt("Введите делитель: ");
+    div_and_print(a, b);
 }

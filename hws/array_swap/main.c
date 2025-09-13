@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void reverse(int* array, int len)
+void Reverse(int* array, int len)
 {
     for (int i = 0; i <= len / 2 - 1; i++) {
         int temp = array[i];
@@ -10,14 +10,14 @@ void reverse(int* array, int len)
     }
 }
 
-void swapEnds(int* array, int n, int m)
+void SwapEnds(int* array, int n, int m)
 {
-    reverse(array, n + m);
-    reverse(array, n);
-    reverse(array + n, m);
+    Reverse(array, n + m);
+    Reverse(array, n);
+    Reverse(array + n, m);
 }
 
-int prompt(char* data)
+int Prompt(char* data)
 {
     int ans = 0;
     printf("%s", data);
@@ -27,18 +27,18 @@ int prompt(char* data)
 
 int main(void)
 {
-    int n = prompt("Введите n: ");
-    int m = prompt("Введите m: ");
+    int n = Prompt("Введите n: ");
+    int m = Prompt("Введите m: ");
     int len = m + n;
 
     int* array = malloc(len);
 
     for (int i = 0; i < len; i++) {
         printf("i = %d, ", i + 1);
-        array[i] = prompt("введите элемент массива: ");
+        array[i] = Prompt("введите элемент массива: ");
     }
 
-    swapEnds(array, n, m);
+    SwapEnds(array, n, m);
 
     printf("\n");
     for (int i = 0; i < len; i++) {

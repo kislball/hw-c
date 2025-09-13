@@ -4,7 +4,7 @@
 
 // Функция возвращает true если деление прошло успешно, false в ином случае
 // По указателю result будет записано частное целочисленного деления a / b
-bool divInt(int a, int b, int* result)
+bool DivInt(int a, int b, int* result)
 {
     if (a == b) {
         *result = 1;
@@ -37,17 +37,17 @@ bool divInt(int a, int b, int* result)
     return true;
 }
 
-void divAndPrint(int a, int b)
+void DivAndPrint(int a, int b)
 {
     int result = 0;
-    if (divInt(a, b, &result)) {
+    if (DivInt(a, b, &result)) {
         printf("%d // %d = %d\n", a, b, result);
     } else {
         printf("Деление невозможно\n");
     }
 }
 
-int prompt(char* data)
+int Prompt(char* data)
 {
     int ans = 0;
     printf("%s", data);
@@ -57,7 +57,7 @@ int prompt(char* data)
 
 int main(void)
 {
-    int a = prompt("Введите делимое: ");
-    int b = prompt("Введите делитель: ");
-    divAndPrint(a, b);
+    int a = Prompt("Введите делимое: ");
+    int b = Prompt("Введите делитель: ");
+    DivAndPrint(a, b);
 }

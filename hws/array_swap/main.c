@@ -23,9 +23,9 @@ int prompt(char *data) {
 }
 
 int main() {
-	const int n = prompt("Введите n: ");
-	const int m = prompt("Введите m: ");
-	const int len = m + n;
+	int n = prompt("Введите n: ");
+	int m = prompt("Введите m: ");
+	int len = m + n;
 
 	int *array = malloc(len);
 

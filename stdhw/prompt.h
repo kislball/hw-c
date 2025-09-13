@@ -1,0 +1,1 @@
+int Prompt(char* data);

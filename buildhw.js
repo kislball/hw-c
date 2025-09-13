@@ -52,5 +52,5 @@ for (const [name, hash] of sourceHashes.entries()) {
 
 await Promise.all(compilationPromises);
 
-await $`gcc ${objectFiles} -o ./build/${argv._[0]}`;
+await $`${CC} ${objectFiles} -o ./build/${argv._[0]}`;
 console.log(`Вывод в файле ./build/${argv._[0]}`);

@@ -1,4 +1,5 @@
 #include <stdbool.h>
+#include <stdhw.h>
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -45,14 +46,6 @@ void DivAndPrint(int a, int b)
     } else {
         printf("Деление невозможно\n");
     }
-}
-
-int Prompt(char* data)
-{
-    int ans = 0;
-    printf("%s", data);
-    scanf("%d", &ans);
-    return ans;
 }
 
 int main(void)

@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdhw.h>
 #include <stdlib.h>
 
 void Reverse(int* array, int len)
@@ -15,14 +16,6 @@ void SwapEnds(int* array, int n, int m)
     Reverse(array, n + m);
     Reverse(array, n);
     Reverse(array + n, m);
-}
-
-int Prompt(char* data)
-{
-    int ans = 0;
-    printf("%s", data);
-    scanf("%d", &ans);
-    return ans;
 }
 
 int main(void)

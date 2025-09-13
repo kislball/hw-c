@@ -10,7 +10,7 @@ void reverse(int* array, int len)
     }
 }
 
-void swap_ends(int* array, int n, int m)
+void swapEnds(int* array, int n, int m)
 {
     reverse(array, n + m);
     reverse(array, n);
@@ -38,7 +38,7 @@ int main()
         array[i] = prompt("введите элемент массива: ");
     }
 
-    swap_ends(array, n, m);
+    swapEnds(array, n, m);
 
     printf("\n");
     for (int i = 0; i < len; i++) {

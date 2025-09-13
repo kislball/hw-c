@@ -1,4 +1,5 @@
-#include "prompt.c"
+#include "prompt.h"
+#include <stdio.h>
 
 int Prompt(char* data)
 {

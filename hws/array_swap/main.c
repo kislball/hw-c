@@ -1,5 +1,5 @@
-#include <stdio.h>
 #include <stdhw.h>
+#include <stdio.h>
 #include <stdlib.h>
 
 void Reverse(int* array, int len)

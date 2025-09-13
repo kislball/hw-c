@@ -25,7 +25,7 @@ int prompt(char* data)
     return ans;
 }
 
-int main()
+int main(void)
 {
     int n = prompt("Введите n: ");
     int m = prompt("Введите m: ");

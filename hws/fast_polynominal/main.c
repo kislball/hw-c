@@ -6,7 +6,7 @@ int calculatePolynominal(int x)
     return (x2 + x) * (x2 + 1) + 1;
 }
 
-int main()
+int main(void)
 {
     int input = 0;
     scanf("%d", &input);

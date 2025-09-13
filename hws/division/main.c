@@ -55,7 +55,7 @@ int prompt(char* data)
     return ans;
 }
 
-int main()
+int main(void)
 {
     int a = prompt("Введите делимое: ");
     int b = prompt("Введите делитель: ");

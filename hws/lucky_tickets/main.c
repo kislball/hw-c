@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <strings.h>
 
-int main()
+int main(void)
 {
     int sums[28] = { 0 };
 

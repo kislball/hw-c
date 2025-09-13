@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-// Функция переворачивает массив длины len
 void reverse(int *array, int len) {
 	for (int i = 0; i <= len / 2 - 1; i++) {
 		int temp = array[i];
@@ -31,7 +30,7 @@ int main() {
 	int *array = malloc(len);
 
 	for (int i = 0; i < len; i++) {
-		printf("n = %d, ", i + 1);
+		printf("i = %d, ", i + 1);
 		array[i] = prompt("введите элемент массива: ");
 	}
 

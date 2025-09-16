@@ -24,3 +24,16 @@ int Prompt(char* data)
     scanf("%d", &ans);
     return ans;
 }
+
+char* PromptString(char* prompt)
+{
+    size_t initial_buffer_size = 16;
+    printf("%s", prompt);
+
+    char* buffer = malloc(sizeof(char) * initial_buffer_size);
+    int size = getline(&buffer, &initial_buffer_size, stdin);
+    // Removing newline character in the end
+    buffer[size - 1] = '\0';
+
+    return buffer;
+}

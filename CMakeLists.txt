@@ -3,4 +3,3 @@ project(C Homeworks)
 
 add_subdirectory(stdhw)
 add_subdirectory(hws)
-

@@ -1,0 +1,8 @@
+add_subdirectory(array_swap)
+add_subdirectory(division)
+add_subdirectory(example_homework)
+add_subdirectory(fast_polynominal)
+add_subdirectory(lucky_tickets)
+add_subdirectory(null_elements)
+add_subdirectory(paren)
+add_subdirectory(substring)

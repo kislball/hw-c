@@ -2,22 +2,22 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int* PromptIntArray(char* prompt, int* len)
+int* promptIntArray(char* promptString, int* len)
 {
-    printf("%s", prompt);
-    *len = Prompt(", введите количество элементов: ");
+    printf("%s", promptString);
+    *len = prompt(", введите количество элементов: ");
 
     int* data = malloc(sizeof(int) * *len);
 
     for (int i = 0; i < *len; i++) {
         printf("n=%d, ", i + 1);
-        data[i] = Prompt("введите элемент: ");
+        data[i] = prompt("введите элемент: ");
     }
 
     return data;
 }
 
-int Prompt(char* data)
+int prompt(char* data)
 {
     int ans = 0;
     printf("%s", data);
@@ -25,10 +25,10 @@ int Prompt(char* data)
     return ans;
 }
 
-char* PromptString(char* prompt)
+char* promptString(char* promptString)
 {
     size_t initial_buffer_size = 16;
-    printf("%s", prompt);
+    printf("%s", promptString);
 
     char* buffer = malloc(sizeof(char) * initial_buffer_size);
     int size = getline(&buffer, &initial_buffer_size, stdin);

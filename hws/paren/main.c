@@ -5,7 +5,7 @@
 
 int main(void)
 {
-    char* input = PromptString("S=");
+    char* input = promptString("S=");
     int n = 0;
     bool ok = true;
 

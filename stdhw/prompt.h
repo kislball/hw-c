@@ -1,3 +1,3 @@
-int Prompt(char* data);
-int* PromptIntArray(char* prompt, int* len);
-char* PromptString(char* prompt);
+int prompt(char* data);
+int* promptIntArray(char* prompt, int* len);
+char* promptString(char* prompt);

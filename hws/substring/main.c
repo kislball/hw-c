@@ -6,8 +6,8 @@
 
 int main(void)
 {
-    char* s = PromptString("S: ");
-    char* s1 = PromptString("S1: ");
+    char* s = promptString("S: ");
+    char* s1 = promptString("S1: ");
 
     int len_s = strlen(s);
     int len_s1 = strlen(s1);

@@ -21,12 +21,12 @@ bool divInt(int a, int b, int* result)
         return true;
     }
 
-    int abs_a = abs(a);
-    int abs_b = abs(b);
+    int absA = abs(a);
+    int absB = abs(b);
 
     *result = 0;
-    while (abs_a >= abs_b) {
-        abs_a -= abs_b;
+    while (absA >= absB) {
+        absA -= absB;
         *result += 1;
     }
 

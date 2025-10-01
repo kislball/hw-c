@@ -17,15 +17,14 @@ LBB0_1:                                 ; =>This Loop Header: Depth=1
 	ldr	w9, [sp, #20]
 	subs	w9, w9, #1
 	subs	w8, w8, w9
-	b.ge	LBB0_12
+	b.ge	LBB0_10
 	b	LBB0_2
 LBB0_2:                                 ;   in Loop: Header=BB0_1 Depth=1
-	strb	wzr, [sp, #15]
-	str	wzr, [sp, #8]
+	str	wzr, [sp, #12]
 	b	LBB0_3
 LBB0_3:                                 ;   Parent Loop BB0_1 Depth=1
                                         ; =>  This Inner Loop Header: Depth=2
-	ldr	w8, [sp, #8]
+	ldr	w8, [sp, #12]
 	ldr	w9, [sp, #20]
 	ldr	w10, [sp, #16]
 	subs	w9, w9, w10
@@ -35,10 +34,10 @@ LBB0_3:                                 ;   Parent Loop BB0_1 Depth=1
 	b	LBB0_4
 LBB0_4:                                 ;   in Loop: Header=BB0_3 Depth=2
 	ldr	x8, [sp, #24]
-	ldrsw	x9, [sp, #8]
+	ldrsw	x9, [sp, #12]
 	ldr	w8, [x8, x9, lsl #2]
 	ldr	x9, [sp, #24]
-	ldr	w10, [sp, #8]
+	ldr	w10, [sp, #12]
 	add	w10, w10, #1
 	ldr	w9, [x9, w10, sxtw #2]
 	subs	w8, w8, w9
@@ -46,45 +45,37 @@ LBB0_4:                                 ;   in Loop: Header=BB0_3 Depth=2
 	b	LBB0_5
 LBB0_5:                                 ;   in Loop: Header=BB0_3 Depth=2
 	ldr	x8, [sp, #24]
-	ldrsw	x9, [sp, #8]
+	ldrsw	x9, [sp, #12]
 	ldr	w8, [x8, x9, lsl #2]
-	str	w8, [sp, #4]
+	str	w8, [sp, #8]
 	ldr	x8, [sp, #24]
-	ldr	w9, [sp, #8]
+	ldr	w9, [sp, #12]
 	add	w9, w9, #1
 	ldr	w8, [x8, w9, sxtw #2]
 	ldr	x9, [sp, #24]
-	ldrsw	x10, [sp, #8]
+	ldrsw	x10, [sp, #12]
 	str	w8, [x9, x10, lsl #2]
-	ldr	w8, [sp, #4]
+	ldr	w8, [sp, #8]
 	ldr	x9, [sp, #24]
-	ldr	w10, [sp, #8]
+	ldr	w10, [sp, #12]
 	add	w10, w10, #1
 	str	w8, [x9, w10, sxtw #2]
-	mov	w8, #1                          ; =0x1
-	strb	w8, [sp, #15]
 	b	LBB0_6
 LBB0_6:                                 ;   in Loop: Header=BB0_3 Depth=2
 	b	LBB0_7
 LBB0_7:                                 ;   in Loop: Header=BB0_3 Depth=2
-	ldr	w8, [sp, #8]
+	ldr	w8, [sp, #12]
 	add	w8, w8, #1
-	str	w8, [sp, #8]
+	str	w8, [sp, #12]
 	b	LBB0_3
 LBB0_8:                                 ;   in Loop: Header=BB0_1 Depth=1
-	ldrb	w8, [sp, #15]
-	tbnz	w8, #0, LBB0_10
 	b	LBB0_9
-LBB0_9:
-	b	LBB0_12
-LBB0_10:                                ;   in Loop: Header=BB0_1 Depth=1
-	b	LBB0_11
-LBB0_11:                                ;   in Loop: Header=BB0_1 Depth=1
+LBB0_9:                                 ;   in Loop: Header=BB0_1 Depth=1
 	ldr	w8, [sp, #16]
 	add	w8, w8, #1
 	str	w8, [sp, #16]
 	b	LBB0_1
-LBB0_12:
+LBB0_10:
 	add	sp, sp, #32
 	ret
 	.cfi_endproc

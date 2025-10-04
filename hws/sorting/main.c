@@ -8,33 +8,22 @@
 int* readNumbers(int* len)
 {
     char* initialStr = promptString("");
-    char* str = trim(initialStr);
-    int inputLen = strlen(str);
-    int totalNumbers = 1;
+    // По условию не более ста чисел
+    int* numbers = calloc(100, sizeof(int));
+    *len = 0;
 
-    for (int i = 0; i < inputLen - 1; i++) {
-        if (str[i] == ' ' && str[i + 1] >= '0' && str[i + 1] <= '9') {
-            totalNumbers += 1;
-        }
+    char* p = initialStr;
+
+    while (true)
+    {
+	char* end;
+	long i = strtol(p, &end, 10);
+	if (p == end) break;
+	p = end;
+	numbers[*len] = (int) i;
+	(*len)++;
     }
 
-    int* numbers = malloc(sizeof(int) * totalNumbers);
-    int curNumber = 0;
-    int curNumberIdx = 0;
-
-    for (int i = 0; i < inputLen; i++) {
-        if (str[i] == ' ' || str[i] == '\n') {
-            numbers[curNumberIdx] = curNumber;
-            curNumber = 0;
-            curNumberIdx++;
-        } else if ('0' <= str[i] && str[i] <= '9') {
-            curNumber *= 10;
-            curNumber += (int)str[i] - '0';
-        }
-    }
-
-    numbers[curNumberIdx] = curNumber;
-    *len = totalNumbers;
     free(initialStr);
     return numbers;
 }

@@ -14,14 +14,14 @@ int* readNumbers(int* len)
 
     char* p = initialStr;
 
-    while (true)
-    {
-	char* end;
-	long i = strtol(p, &end, 10);
-	if (p == end) break;
-	p = end;
-	numbers[*len] = (int) i;
-	(*len)++;
+    while (true) {
+        char* end;
+        long i = strtol(p, &end, 10);
+        if (p == end)
+            break;
+        p = end;
+        numbers[*len] = (int)i;
+        (*len)++;
     }
 
     free(initialStr);

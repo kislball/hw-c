@@ -44,15 +44,16 @@ int main()
     int n = 0;
     int* arr = readNumbers(&n);
     int* arrInitial = malloc(100 * sizeof(int));
+    memset(arrInitial, 0, 100);
     for (int i = 0; i < n; i++) {
         arrInitial[i] = arr[i];
     }
 
-    memset(arrInitial, 0, 100);
     sort(arr, n);
 
     for (int i = 0; i < n; i++)
-        printf("%d\n", arr[i]);
+        printf("%d ", arr[i]);
+    printf("\n");
 
     int changedPositions = 0;
 

@@ -1,1 +1,1 @@
-void sort(int* arr, int len) asm("_sort");
+void sort(int* arr, int len);

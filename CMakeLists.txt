@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.15)
-project(Homeworks C)
+project(Homeworks C ASM)
 
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)

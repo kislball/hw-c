@@ -47,7 +47,7 @@ int stackPop(Stack* stack, bool* isSuccessful)
 
     free(head);
 
-    return val;
+    return true;
 }
 
 void stackDelete(Stack* stack)

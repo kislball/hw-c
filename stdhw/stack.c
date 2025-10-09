@@ -17,6 +17,7 @@ bool stackPush(Stack* stack, int value)
 
     node->value = value;
     node->next = stack->head;
+<<<<<<< HEAD
     stack->size++;
 
     stack->head = node;

@@ -22,21 +22,21 @@ bool stackPush(Stack* stack, int value)
     return true;
 }
 
-int stackPeek(Stack* stack, bool* has)
+int stackPeek(Stack* stack, bool* isSuccessful)
 {
     if (stack->head == NULL) {
-        *has = false;
+        *isSuccessful = false;
         return 0;
     } else {
-        *has = true;
+        *isSuccessful = true;
         return stack->head->value;
     }
 }
 
-int stackPop(Stack* stack, bool* has)
+int stackPop(Stack* stack, bool* isSuccessful)
 {
-    int val = stackPeek(stack, has);
-    if (!*has) {
+    int val = stackPeek(stack, isSuccessful);
+    if (!*isSuccessful) {
         return 0;
     }
 
@@ -53,4 +53,5 @@ void stackDelete(Stack* stack)
     while (has) {
         stackPop(stack, &has);
     }
+    stack->head = NULL;
 }

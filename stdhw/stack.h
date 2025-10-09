@@ -20,7 +20,7 @@ void stackDelete(Stack* stack);
 bool stackPush(Stack* stack, int vlaue);
 // Возвращает элемент с вершины стека, а затем убирает его. По указателю во втором аргументе устанавливается значение
 // true если в стеке есть элемент на вершине, в ином случае false.
-int stackPop(Stack* stack, bool* has);
+int stackPop(Stack* stack, bool* isSuccessful);
 // Возвращает элемент с вершины стека. По указателю во втором аргументе устанавливается значение
 // true если в стеке есть элемент на вершине, в ином случае false.
-int stackPeek(Stack* stack, bool* has);
+int stackPeek(Stack* stack, bool* isSuccessful);

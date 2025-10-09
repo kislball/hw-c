@@ -57,17 +57,17 @@ bool checkParenBalance(char* input)
         if (isOpeningParen(current)) {
             stackPush(&parens, (int)type);
         } else if (isClosingParen(current)) {
-            bool has = false;
-            ParenType onTop = stackPop(&parens, &has);
-            if (!has || onTop != type)
+            bool isSucessful = false;
+            ParenType onTop = stackPop(&parens, &isSucessful);
+            if (!isSucessful || onTop != type)
                 return false;
         }
     }
 
-    bool has = false;
-    stackPeek(&parens, &has);
+    bool isSuccessful = false;
+    stackPeek(&parens, &isSuccessful);
     stackDelete(&parens);
-    return !has;
+    return !isSuccessful;
 }
 
 int main(void)

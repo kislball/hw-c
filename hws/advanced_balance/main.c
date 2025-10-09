@@ -8,7 +8,7 @@ typedef enum {
     NotAParen = -1, // что угодно, но не нижеперечисленные символы
     RoundParen = 0, // ()
     SquareParen = 1, // []
-    WaveyParen = 2, // {}
+    CurlyParen = 2, // {}
 } ParenType;
 
 bool isOpeningParen(char ch)
@@ -37,7 +37,7 @@ ParenType resolveParenType(char ch)
         return SquareParen;
     case '{':
     case '}':
-        return WaveyParen;
+        return CurlyParen;
     default:
         return NotAParen;
     }

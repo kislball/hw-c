@@ -8,7 +8,7 @@ typedef struct StackNode {
 } StackNode;
 
 // Стек, поддерживающий операции push, pop, peek.
-typedef struct Stack {
+typedef struct {
     StackNode* head;
 } Stack;
 

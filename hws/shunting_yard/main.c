@@ -100,28 +100,28 @@ char* shuntingYard(char* input)
             stackPush(&output, tokenToInt(cur));
         } else if (isOperator(cur)) {
             int priority = getPriority(tokenToInt(cur));
-            bool has = false;
+            bool isSuccessful = false;
             do {
-                int opType = stackPeek(&operator, &has);
-                if (!has || getPriority(opType) < priority)
+                int opType = stackPeek(&operator, &isSuccessful);
+                if (!isSuccessful || getPriority(opType) < priority)
                     break;
-                stackPop(&operator, &has);
+                stackPop(&operator, &isSuccessful);
                 stackPush(&output, opType);
-            } while (has);
+            } while (isSuccessful);
             stackPush(&operator, tokenToInt(cur));
         } else if (cur == '(') {
             stackPush(&operator, TOKEN_OPEN);
         } else if (cur == ')') {
-            bool has = false;
-            int intOp = stackPop(&operator, &has);
-            if (!has) {
+            bool isSuccessful = false;
+            int intOp = stackPop(&operator, &isSuccessful);
+            if (!isSuccessful) {
                 goto over;
             }
 
             while (intOp != TOKEN_OPEN) {
                 stackPush(&output, intOp);
-                intOp = stackPop(&operator, &has);
-                if (!has)
+                intOp = stackPop(&operator, &isSuccessful);
+                if (!isSuccessful)
                     goto over;
             }
         } else {
@@ -130,34 +130,34 @@ char* shuntingYard(char* input)
         inputStart++;
     }
 
-    bool has = false;
-    int op = stackPop(&operator, &has);
-    while (has) {
+    bool isSuccessful = false;
+    int op = stackPop(&operator, &isSuccessful);
+    while (isSuccessful) {
         if (op == TOKEN_OPEN)
             return NULL;
         stackPush(&output, op);
-        op = stackPop(&operator, &has);
+        op = stackPop(&operator, &isSuccessful);
     }
 
     int v = 0;
-    while ((v = stackPop(&output, &has)), has) {
+    while ((v = stackPop(&output, &isSuccessful)), isSuccessful) {
         stackPush(&reversed, v);
     }
 
-    int out = stackPop(&reversed, &has);
+    int out = stackPop(&reversed, &isSuccessful);
     result = malloc(sizeof(char) * outputMaxLen);
     if (result == NULL)
         goto over;
     memset(result, '\0', outputMaxLen);
     int i = 0;
 
-    while (has) {
+    while (isSuccessful) {
         char token = intToToken(out);
         result[i] = token;
         result[i + 1] = ' ';
         i += 2;
 
-        out = stackPop(&reversed, &has);
+        out = stackPop(&reversed, &isSuccessful);
     }
     result[i - 1] = '\0';
 

@@ -1,9 +1,10 @@
+#include "yard.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "yard.h"
 
-int main(void) {
+int main(void)
+{
     const char* infix[] = {
         "3+4*2/(1-5)",
         "1+2",
@@ -31,7 +32,7 @@ int main(void) {
     };
 
     int failed = 0;
-    size_t n = sizeof(infix)/sizeof(infix[0]);
+    size_t n = sizeof(infix) / sizeof(infix[0]);
 
     for (size_t i = 0; i < n; i++) {
         char* result = shuntingYardAlloc((char*)infix[i]);

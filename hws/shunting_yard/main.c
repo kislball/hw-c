@@ -10,7 +10,6 @@
 #define TOKEN_MUL -3
 #define TOKEN_DIV -4
 #define TOKEN_OPEN -5
-#define TOKEN_CLOSE -6
 
 bool isOperator(char op)
 {
@@ -38,8 +37,6 @@ int tokenToInt(char op)
         return TOKEN_DIV;
     case '(':
         return TOKEN_OPEN;
-    case ')':
-        return TOKEN_CLOSE;
     default:
         return op - '0';
     }
@@ -58,8 +55,6 @@ char intToToken(int op)
         return '/';
     case TOKEN_OPEN:
         return '(';
-    case TOKEN_CLOSE:
-        return ')';
     default:
         return (char)op + '0';
     }
@@ -86,14 +81,10 @@ char* shuntingYard(char* input)
     Stack reversed = stackNew();
 
     int inputLen = strlen(input);
-    int outputMaxLen = 0;
-    char* inputStart = input;
-    char* inputEnd = input + inputLen;
     char* result = NULL;
 
-    while (inputStart < inputEnd) {
-        char cur = *inputStart;
-        outputMaxLen += 3;
+    for (int i = 0; input[i] != '\0'; i++) {
+        char cur = input[i];
 
         // В условии сказано про цифры, не числа
         if (isdigit(cur)) {
@@ -124,10 +115,7 @@ char* shuntingYard(char* input)
                 if (!isSuccessful)
                     goto over;
             }
-        } else {
-            outputMaxLen -= 1;
-        }
-        inputStart++;
+        } 
     }
 
     bool isSuccessful = false;
@@ -139,16 +127,16 @@ char* shuntingYard(char* input)
         op = stackPop(&operator, &isSuccessful);
     }
 
-    int v = 0;
-    while ((v = stackPop(&output, &isSuccessful)), isSuccessful) {
+    int v = stackPop(&output, &isSuccessful);
+    while (isSuccessful) {
         stackPush(&reversed, v);
+	stackPop(&output, &isSuccessful);
     }
 
     int out = stackPop(&reversed, &isSuccessful);
-    result = malloc(sizeof(char) * outputMaxLen);
+    result = calloc(inputLen * 2, sizeof(char));
     if (result == NULL)
         goto over;
-    memset(result, '\0', outputMaxLen);
     int i = 0;
 
     while (isSuccessful) {

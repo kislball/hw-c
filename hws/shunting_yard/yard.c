@@ -1,3 +1,4 @@
+#include <assert.h>
 #include <ctype.h>
 #include <stdbool.h>
 #include <stdhw.h>
@@ -81,7 +82,8 @@ bool populateStacks(Stack* output, Stack* operator, char* input)
     for (int i = 0; input[i] != '\0' && ok; i++) {
         char cur = input[i];
 
-	if (isspace(cur)) continue;
+        if (isspace(cur))
+            continue;
 
         // В условии сказано про цифры, не числа
         if (isdigit(cur)) {
@@ -103,15 +105,16 @@ bool populateStacks(Stack* output, Stack* operator, char* input)
             bool isSuccessful = false;
             int intOp = stackPop(operator, &isSuccessful);
             if (!isSuccessful) {
-		    ok = false;
-		    break;
+                ok = false;
+                break;
             }
 
             while (intOp != TOKEN_OPEN && isSuccessful) {
                 stackPush(output, intOp);
                 intOp = stackPop(operator, &isSuccessful);
-                if (!isSuccessful)
-			{ ok = false; }
+                if (!isSuccessful) {
+                    ok = false;
+                }
             }
         }
     }
@@ -120,9 +123,9 @@ bool populateStacks(Stack* output, Stack* operator, char* input)
     int op = stackPop(operator, &isSuccessful);
     while (isSuccessful) {
         if (op == TOKEN_OPEN) {
-		ok = false;
-		break;
-	}
+            ok = false;
+            break;
+        }
         stackPush(output, op);
         op = stackPop(operator, &isSuccessful);
     }
@@ -130,49 +133,43 @@ bool populateStacks(Stack* output, Stack* operator, char* input)
     return ok;
 }
 
-char* shuntingYard(char* input, Stack *output, Stack *operator, Stack *reversed)
+char* shuntingYard(char* input, Stack* output, Stack* operator)
 {
     int inputLen = strlen(input);
     char* result = NULL;
 
     bool ok = populateStacks(output, operator, input);
-    if (!ok) return NULL;
+    if (!ok)
+        return NULL;
 
-    bool isSuccessful = false;
-
-    int v = stackPop(output, &isSuccessful);
-    while (isSuccessful) {
-        stackPush(reversed, v);
-        v = stackPop(output, &isSuccessful);
-    }
-
-    int out = stackPop(reversed, &isSuccessful);
-    result = calloc(inputLen * 2, sizeof(char));
+    result = calloc(output->size * 2, sizeof(char));
     if (result == NULL)
-	    return NULL;
-    int i = 0;
+        return NULL;
 
-    while (isSuccessful) {
-        char token = intToToken(out);
-        result[i] = token;
-        result[i + 1] = ' ';
-        i += 2;
+    ok = true;
+    int terminated = false;
+    int i = output->size * 2 - 1;
 
-        out = stackPop(reversed, &isSuccessful);
+    for (int i = output->size * 2 - 1; i > 0 && ok; i -= 2) {
+        int v = stackPop(output, &ok);
+        char tok = intToToken(v);
+        char suffix = terminated ? ' ' : '\0';
+        terminated = true;
+
+        result[i] = suffix;
+        result[i - 1] = tok;
     }
-    result[i - 1] = '\0';
+
     return result;
 }
 
-char* shuntingYardAlloc(char *input)
+char* shuntingYardAlloc(char* input)
 {
-	Stack output = stackNew();
-	Stack operator = stackNew();
-	Stack reversed = stackNew();
+    Stack output = stackNew();
+    Stack operator = stackNew();
 
-	char* result = shuntingYard(input, &output, &operator, &reversed);
-	stackDelete(&output);
-	stackDelete(&operator);
-	stackDelete(&reversed);
-	return result;
+    char* result = shuntingYard(input, &output, &operator);
+    stackDelete(&output);
+    stackDelete(&operator);
+    return result;
 }

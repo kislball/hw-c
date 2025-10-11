@@ -130,7 +130,7 @@ char* shuntingYard(char* input)
     int v = stackPop(&output, &isSuccessful);
     while (isSuccessful) {
         stackPush(&reversed, v);
-	stackPop(&output, &isSuccessful);
+	v = stackPop(&output, &isSuccessful);
     }
 
     int out = stackPop(&reversed, &isSuccessful);

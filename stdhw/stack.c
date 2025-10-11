@@ -17,6 +17,7 @@ bool stackPush(Stack* stack, int value)
 
     node->value = value;
     node->next = stack->head;
+    stack->size++;
 
     stack->head = node;
     return true;
@@ -42,6 +43,7 @@ int stackPop(Stack* stack, bool* isSuccessful)
 
     StackNode* head = stack->head;
     stack->head = head->next;
+    stack->size--;
     free(head);
 
     return val;

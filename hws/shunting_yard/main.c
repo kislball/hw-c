@@ -74,69 +74,85 @@ int getPriority(int op)
     }
 }
 
-char* shuntingYard(char* input)
+// Заполняет стеки в соответствии с алгоритмом сортировочной станции
+bool populateStacks(Stack* output, Stack* operator, char* input)
 {
-    Stack output = stackNew();
-    Stack operator = stackNew();
-    Stack reversed = stackNew();
-
-    int inputLen = strlen(input);
-    char* result = NULL;
+    bool ok = true;
 
     for (int i = 0; input[i] != '\0'; i++) {
         char cur = input[i];
 
         // В условии сказано про цифры, не числа
         if (isdigit(cur)) {
-            stackPush(&output, tokenToInt(cur));
+            stackPush(output, tokenToInt(cur));
         } else if (isOperator(cur)) {
             int priority = getPriority(tokenToInt(cur));
             bool isSuccessful = false;
             do {
-                int opType = stackPeek(&operator, &isSuccessful);
+                int opType = stackPeek(operator, &isSuccessful);
                 if (!isSuccessful || getPriority(opType) < priority)
                     break;
-                stackPop(&operator, &isSuccessful);
-                stackPush(&output, opType);
+                stackPop(operator, &isSuccessful);
+                stackPush(output, opType);
             } while (isSuccessful);
-            stackPush(&operator, tokenToInt(cur));
+            stackPush(operator, tokenToInt(cur));
         } else if (cur == '(') {
-            stackPush(&operator, TOKEN_OPEN);
+            stackPush(operator, TOKEN_OPEN);
         } else if (cur == ')') {
             bool isSuccessful = false;
-            int intOp = stackPop(&operator, &isSuccessful);
+            int intOp = stackPop(operator, &isSuccessful);
             if (!isSuccessful) {
-                goto over;
+		    ok = false;
             }
 
             while (intOp != TOKEN_OPEN) {
-                stackPush(&output, intOp);
-                intOp = stackPop(&operator, &isSuccessful);
+                stackPush(output, intOp);
+                intOp = stackPop(operator, &isSuccessful);
                 if (!isSuccessful)
-                    goto over;
+			ok = false;
             }
-        } 
+        }
+
+
+	if (!ok) break;
     }
 
     bool isSuccessful = false;
-    int op = stackPop(&operator, &isSuccessful);
+    int op = stackPop(operator, &isSuccessful);
     while (isSuccessful) {
-        if (op == TOKEN_OPEN)
-            return NULL;
-        stackPush(&output, op);
-        op = stackPop(&operator, &isSuccessful);
+        if (op == TOKEN_OPEN) {
+		ok = false;
+		break;
+	}
+        stackPush(output, op);
+        op = stackPop(operator, &isSuccessful);
     }
 
-    int v = stackPop(&output, &isSuccessful);
+    return ok;
+}
+
+// Алгоритм сортировочной станции. На вход принимает входные данные, а так же три стека.
+// Подразумевается, что память, на которую указывает возвращаемый указатель, очищается пользователем.
+char* shuntingYard(char* input, Stack *output, Stack *operator, Stack *reversed)
+{
+    int inputLen = strlen(input);
+    char* result = NULL;
+
+    bool ok = populateStacks(output, operator, input);
+    if (!ok) return NULL;
+
+    bool isSuccessful = false;
+
+    int v = stackPop(output, &isSuccessful);
     while (isSuccessful) {
-        stackPush(&reversed, v);
-	v = stackPop(&output, &isSuccessful);
+        stackPush(reversed, v);
+        v = stackPop(output, &isSuccessful);
     }
 
-    int out = stackPop(&reversed, &isSuccessful);
+    int out = stackPop(reversed, &isSuccessful);
     result = calloc(inputLen * 2, sizeof(char));
     if (result == NULL)
-        goto over;
+	    return NULL;
     int i = 0;
 
     while (isSuccessful) {
@@ -145,21 +161,31 @@ char* shuntingYard(char* input)
         result[i + 1] = ' ';
         i += 2;
 
-        out = stackPop(&reversed, &isSuccessful);
+        out = stackPop(reversed, &isSuccessful);
     }
     result[i - 1] = '\0';
-
-over:
-    stackDelete(&output);
-    stackDelete(&operator);
-    stackDelete(&reversed);
     return result;
+}
+
+// То же самое, что и shuntingYard, но самостоятельно выделяет и очищает память за исключением
+// выходных данных.
+char* shuntingYardAlloc(char *input)
+{
+	Stack output = stackNew();
+	Stack operator = stackNew();
+	Stack reversed = stackNew();
+
+	char* result = shuntingYard(input, &output, &operator, &reversed);
+	stackDelete(&output);
+	stackDelete(&operator);
+	stackDelete(&reversed);
+	return result;
 }
 
 int main(void)
 {
     char* input = promptString("s=");
-    char* result = shuntingYard(input);
+    char* result = shuntingYardAlloc(input);
     printf("%s\n", result == NULL ? "Incorrect input" : result);
 
     free(input);

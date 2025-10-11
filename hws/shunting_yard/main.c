@@ -79,8 +79,10 @@ bool populateStacks(Stack* output, Stack* operator, char* input)
 {
     bool ok = true;
 
-    for (int i = 0; input[i] != '\0'; i++) {
+    for (int i = 0; input[i] != '\0' && ok; i++) {
         char cur = input[i];
+
+	if (isspace(cur)) continue;
 
         // В условии сказано про цифры, не числа
         if (isdigit(cur)) {
@@ -103,18 +105,16 @@ bool populateStacks(Stack* output, Stack* operator, char* input)
             int intOp = stackPop(operator, &isSuccessful);
             if (!isSuccessful) {
 		    ok = false;
+		    break;
             }
 
-            while (intOp != TOKEN_OPEN) {
+            while (intOp != TOKEN_OPEN && isSuccessful) {
                 stackPush(output, intOp);
                 intOp = stackPop(operator, &isSuccessful);
                 if (!isSuccessful)
-			ok = false;
+			{ ok = false; }
             }
         }
-
-
-	if (!ok) break;
     }
 
     bool isSuccessful = false;

@@ -33,6 +33,8 @@ int main()
 	assert(v == 30 && "Elements are correctly removed");
 	assert(linkedListCount(&list) == 2 && "Elements are correctly removed");
 
+	linkedListPrintStdout(&list);
+
 	linkedListDelete(&list);
 	assert(linkedListCount(&list) == 0 && "List is properly deleted");
 

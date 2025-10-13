@@ -1,25 +1,38 @@
 #pragma once
 #include <stdbool.h>
 
+// Элемент связного списка
 typedef struct LinkedListNode {
     int value;
     struct LinkedListNode* next;
 } LinkedListNode;
 
+// Связный список
 typedef struct LinkedList {
     LinkedListNode* head;
 } LinkedList;
 
+// Добавление элемента в список по заданному индексу
 bool linkedListInsert(LinkedList* list, int index, int value);
+// Получение элемента по заданному списку
 bool linkedListGet(LinkedList* list, int index, int* value);
+// Получение указателя на узел по заданному индексу
 LinkedListNode* linkedListGetPointer(LinkedList* list, int index);
+// Удаление элемента из списка по задданому индексу
 bool linkedListRemove(LinkedList* list, int index);
+// Добавление элементов из from в to
 void linkedListAppend(LinkedList* to, LinkedList* from);
+// Возвращает количество элементов в списке
 int linkedListCount(LinkedList* list);
 
+// Создание нового связного списка
 LinkedList linkedListNew();
+// Удаление всех элементов связного списка
 void linkedListDelete(LinkedList* list);
+// Вывод всех элементов списка используя функцию print(предоставляется пользователем)
 void linkedListPrint(LinkedList* list, void (*print)(int));
+// Вывод всех элементов списка в стандартный вывод
 void linkedListPrintStdout(LinkedList* list);
 
+// Макрос, позволяющий проходить циклом по всем элементам списка
 #define LINKED_LIST_FOREACH(list, node) for (LinkedListNode* node = (list)->head; (node) != NULL; (node) = (node)->next)

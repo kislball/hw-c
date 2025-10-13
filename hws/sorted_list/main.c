@@ -1,4 +1,3 @@
-#include "list.h"
 #include <stdhw.h>
 #include <stdio.h>
 
@@ -20,6 +19,10 @@ int main()
 			case 1: {
 				int value = prompt("Введите элемент: ");
 				int index = 0;
+				LINKED_LIST_FOREACH(&list, node) {
+					if (node->value <= value) index++;
+					else break;
+				}
 
 				bool ok = linkedListInsert(&list, index, value);
 				printf("%s\n", ok ? "Элемент встроен в список" : "Неправильный индекс");

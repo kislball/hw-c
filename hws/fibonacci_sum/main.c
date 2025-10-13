@@ -2,26 +2,19 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define MAX_FIBONACCI 35
-
-// Программа расчитывает все числа Фибоначчи до MAX_FIBONACCI,
-// затем считает из них сумму чётных, не превыщающих миллиона
+// Программа считает сумму всех чётных чисел Фибоначчи не превышающих миллиона.
 int main()
 {
-    int* fib = calloc(MAX_FIBONACCI, sizeof(int));
-    fib[0] = 1;
-    fib[1] = 1;
-
-    for (int i = 2; i < MAX_FIBONACCI; i++)
-        fib[i] = fib[i - 1] + fib[i - 2];
-
+    int prev = 1, current = 1;
     int sum = 0;
-    for (int i = 0; i < MAX_FIBONACCI; i += 1) {
-        if (fib[i] <= 1000000 && fib[i] % 2 == 0)
-            sum += fib[i];
+
+    while (current <= 1000000) {
+	if (current % 2 == 0) sum += current;
+	int next = current + prev;
+	prev = current;
+	current = next;
     }
 
     printf("Ответ: %d\n", sum);
-    free(fib);
     return 0;
 }

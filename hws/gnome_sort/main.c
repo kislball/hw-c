@@ -21,7 +21,7 @@ void gnomeSort(int* input, int len)
 int main()
 {
 	int len = 0;
-	int* input = promptIntArray("Введите массив чисел для сортировки: ", &len);
+	int* input = promptIntArray("Введите массив чисел для сортировки", &len);
 
 	gnomeSort(input, len);
 

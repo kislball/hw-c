@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+// Сортирует массив, начинающийся с элемента по адресу input, с длиной lеn по возрастанию.
 void gnomeSort(int* input, int len)
 {
     int i = 1;

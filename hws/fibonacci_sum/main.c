@@ -4,6 +4,8 @@
 
 #define MAX_FIBONACCI 35
 
+// Программа расчитывает все числа Фибоначчи до MAX_FIBONACCI,
+// затем считает из них сумму чётных, не превыщающих миллиона
 int main()
 {
     int* fib = calloc(MAX_FIBONACCI, sizeof(int));

@@ -4,6 +4,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+// Проверяет явяляется ли переданная строка палиндромом.
+// Игнорирует пробелы. Возвращает true или false.
 bool isPalindrome(char* input)
 {
     int len = strlen(input);
@@ -20,6 +22,7 @@ bool isPalindrome(char* input)
         left++;
         right--;
     }
+
     return true;
 }
 

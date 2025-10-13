@@ -43,7 +43,7 @@ bool linkedListInsert(LinkedList* list, int index, int value)
 LinkedListNode* linkedListGetPointer(LinkedList* list, int index)
 {
     if (index < 0)
-        return false;
+        return NULL;
     LinkedListNode* ptr = list->head;
     for (int i = 0; i < index && ptr != NULL; i++) {
         ptr = ptr->next;
@@ -80,7 +80,7 @@ bool linkedListRemove(LinkedList* list, int index)
 
     LinkedListNode* before = linkedListGetPointer(list, index - 1);
     if (before == NULL)
-        assert(false && "UNREACHABLE");
+        return false;
     LinkedListNode* toBeRemoved = before->next;
     if (toBeRemoved == NULL)
         return false;
@@ -91,6 +91,11 @@ bool linkedListRemove(LinkedList* list, int index)
 
 void linkedListAppend(LinkedList* list, LinkedList* from)
 {
+    if (list->head == NULL) {
+        list->head = from->head;
+        from->head = NULL;
+        return;
+    }
     LinkedListNode* last = list->head;
     while (last->next != NULL)
         last = last->next;

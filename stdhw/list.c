@@ -18,7 +18,7 @@ bool linkedListInsertNode(LinkedList* list, int index, LinkedListNode* node)
 		return true;
 	}
 
-	LinkedListNode* ptr = linkedListGetPointer(list, index);
+	LinkedListNode* ptr = linkedListGetPointer(list, index - 1);
 	if (ptr == NULL) return false;
 
 	node->next = ptr->next;

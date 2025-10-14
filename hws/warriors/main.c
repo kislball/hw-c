@@ -2,11 +2,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+// Воин в ряду.
 typedef struct Warrior {
     struct Warrior* next;
     int ord;
 } Warrior;
 
+// Определяет номер выжившего воина из n бойцов, которые убивают каждого m-ого.
 int warriors(int n, int m)
 {
     Warrior* first = malloc(sizeof(Warrior));

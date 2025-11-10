@@ -1,0 +1,21 @@
+name: Tests
+
+on:
+  - push
+  - pull_request
+
+jobs:
+  build-and-lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - name: Configure
+        run: |
+          # -DCMAKE_EXPORT_COMPILE_COMMANDS=ON is important for clang-tidy
+          cmake . -B build -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
+      - name: Build
+        run: |
+          cmake --build build
+      - name: Test
+        run: |
+          cd build && make test

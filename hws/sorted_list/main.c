@@ -1,7 +1,7 @@
 #include <stdhw.h>
 #include <stdio.h>
 
-int main()
+int main(void)
 {
     LinkedList list = linkedListNew();
     bool work = true;

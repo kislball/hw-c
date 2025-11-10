@@ -7,10 +7,10 @@ int sortedLinkedListInsert(LinkedList* list, int value)
     int index = 0;
     LINKED_LIST_FOREACH(list, node)
     {
-	if (node->value <= value)
-	    index++;
-	else
-	    break;
+        if (node->value <= value)
+            index++;
+        else
+            break;
     }
 
     bool ok = linkedListInsert(list, index, value);

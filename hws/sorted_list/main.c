@@ -1,5 +1,6 @@
 #include <stdhw.h>
 #include <stdio.h>
+#include "sortedList.h"
 
 int main(void)
 {
@@ -19,17 +20,8 @@ int main(void)
             break;
         case 1: {
             int value = prompt("Введите элемент: ");
-            int index = 0;
-            LINKED_LIST_FOREACH(&list, node)
-            {
-                if (node->value <= value)
-                    index++;
-                else
-                    break;
-            }
-
-            bool ok = linkedListInsert(&list, index, value);
-            printf("%s\n", ok ? "Элемент встроен в список" : "Неправильный индекс");
+	    int index = sortedLinkedListInsert(&list, value);
+            printf("Элемент встроен в список по индексу %d\n", index);
 
             break;
         }

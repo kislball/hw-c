@@ -1,7 +1,6 @@
 #include "sortedList.h"
 #include <stdhw.h>
 #include <stdio.h>
-#include "sortedList.h"
 
 int main(void)
 {
@@ -17,7 +16,7 @@ int main(void)
             break;
         case 1: {
             int value = prompt("Введите элемент: ");
-	    int index = sortedLinkedListInsert(list, value);
+            int index = sortedLinkedListInsert(&list, value);
             printf("Элемент встроен в список по индексу %d\n", index);
 
             break;

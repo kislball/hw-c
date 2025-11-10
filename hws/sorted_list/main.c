@@ -1,6 +1,7 @@
 #include "sortedList.h"
 #include <stdhw.h>
 #include <stdio.h>
+#include "sortedList.h"
 
 int main(void)
 {

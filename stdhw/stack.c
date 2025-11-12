@@ -4,7 +4,7 @@
 
 Stack stackNew()
 {
-    Stack st = { .head = NULL };
+    Stack st = { .head = NULL, .size = 0 };
     return st;
 }
 
@@ -17,6 +17,7 @@ bool stackPush(Stack* stack, int value)
 
     node->value = value;
     node->next = stack->head;
+    stack->size++;
 
     stack->head = node;
     return true;
@@ -42,6 +43,8 @@ int stackPop(Stack* stack, bool* isSuccessful)
 
     StackNode* head = stack->head;
     stack->head = head->next;
+    stack->size--;
+
     free(head);
 
     return val;
@@ -54,4 +57,5 @@ void stackDelete(Stack* stack)
         stackPop(stack, &has);
     }
     stack->head = NULL;
+    stack->size = 0;
 }

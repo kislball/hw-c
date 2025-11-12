@@ -46,7 +46,7 @@ int warriors(int n, int m)
     return survivor;
 }
 
-int main()
+int main(void)
 {
     int n = prompt("n=");
     int m = prompt("m=");

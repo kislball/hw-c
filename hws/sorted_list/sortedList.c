@@ -1,13 +1,15 @@
 #include "sortedList.h"
 #include <assert.h>
+#include <stdhw.h>
 #include <stdlib.h>
 
 int sortedLinkedListInsert(LinkedList* list, int value)
 {
     int index = 0;
-    LINKED_LIST_FOREACH(list, node)
-    {
-        if (node->value <= value)
+    LinkedListIterator* it = linkedListIteratorNew(list);
+    int nodeValue = 0;
+    while (linkedListIteratorNext(it, &nodeValue)) {
+        if (nodeValue <= value)
             index++;
         else
             break;
@@ -16,5 +18,6 @@ int sortedLinkedListInsert(LinkedList* list, int value)
     bool ok = linkedListInsert(list, index, value);
     assert(ok);
 
+    linkedListIteratorFree(&it);
     return index;
 }

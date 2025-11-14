@@ -17,6 +17,7 @@ typedef struct LinkedListNode {
 // Связный список
 typedef struct LinkedList {
     LinkedListNode* head;
+    int size;
 } LinkedList;
 
 typedef struct LinkedListIterator {
@@ -70,6 +71,7 @@ bool linkedListInsertNode(LinkedList* list, int index, LinkedListNode* node)
     if (index == 0) {
         node->next = list->head;
         list->head = node;
+        list->size++;
         return true;
     }
 
@@ -79,6 +81,7 @@ bool linkedListInsertNode(LinkedList* list, int index, LinkedListNode* node)
 
     node->next = ptr->next;
     ptr->next = node;
+    list->size++;
     return true;
 }
 
@@ -133,6 +136,7 @@ bool linkedListRemove(LinkedList* list, int index)
         LinkedListNode* next = list->head->next;
         free(list->head);
         list->head = next;
+        list->size--;
         return true;
     }
 
@@ -143,6 +147,7 @@ bool linkedListRemove(LinkedList* list, int index)
     if (toBeRemoved == NULL)
         return false;
     before->next = toBeRemoved->next;
+    list->size--;
     free(toBeRemoved);
     return true;
 }
@@ -150,6 +155,8 @@ bool linkedListRemove(LinkedList* list, int index)
 void linkedListAppend(LinkedList* list, LinkedList* from)
 {
     ASSERT_LIST_NOT_NULL(list);
+    ASSERT_LIST_NOT_NULL(from);
+    list->size += from->size;
     if (list->head == NULL) {
         list->head = from->head;
         from->head = NULL;
@@ -164,13 +171,7 @@ void linkedListAppend(LinkedList* list, LinkedList* from)
 
 int linkedListCount(LinkedList* list)
 {
-    ASSERT_LIST_NOT_NULL(list);
-    int i = 0;
-    LINKED_LIST_FOREACH(list, node)
-    {
-        i++;
-    }
-    return i;
+    return list->size;
 }
 
 void linkedListDelete(LinkedList* list)

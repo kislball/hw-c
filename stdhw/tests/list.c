@@ -37,8 +37,8 @@ int main()
     LinkedListIterator* it = linkedListIteratorNew(list);
     int count = 0;
     for (int i = 0; linkedListIteratorNext(it, &i);) {
-	    printf("%d\n", i);
-	    count++;
+        printf("%d\n", i);
+        count++;
     }
     linkedListIteratorFree(&it);
     assert(linkedListCount(list) == count && "Iterator is executed for all elements");

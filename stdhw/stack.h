@@ -10,6 +10,7 @@ typedef struct StackNode {
 // Стек, поддерживающий операции push, pop, peek.
 typedef struct {
     StackNode* head;
+    int size;
 } Stack;
 
 // Инициализирует новый экземпляр структуры стек.

@@ -1,12 +1,20 @@
 #pragma once
 #include <stdbool.h>
 
+// Связный список
 typedef struct LinkedList LinkedList;
+// Узел в связном списке
 typedef struct LinkedListNode LinkedListNode;
+// Итератор для связного списка
 typedef struct LinkedListIterator LinkedListIterator;
 
+// Создание нового итератора
 LinkedListIterator* linkedListIteratorNew(LinkedList* list);
+// Получение следующего элемента в связном списке с помощью итератора.
+// Сохраняет значение в указатель value, возвращает true если было получено
+// новое значение, в ином случае false.
 bool linkedListIteratorNext(LinkedListIterator* iterator, int* value);
+// Освобождает итератор.
 void linkedListIteratorFree(LinkedListIterator** iterator);
 
 // Добавление элемента в список по заданному индексу
@@ -18,6 +26,7 @@ LinkedListNode* linkedListGetPointer(LinkedList* list, int index);
 // Удаление элемента из списка по задданому индексу
 bool linkedListRemove(LinkedList* list, int index);
 // Добавление элементов из from в to
+// При этом элементы списка from будут перемещены, а он сам будет опустошён
 void linkedListAppend(LinkedList* to, LinkedList* from);
 // Возвращает количество элементов в списке
 int linkedListCount(LinkedList* list);

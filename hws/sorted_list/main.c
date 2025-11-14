@@ -1,10 +1,10 @@
-#include "sortedList.h"
+#include "list.h"
 #include <stdhw.h>
 #include <stdio.h>
 
 int main(void)
 {
-    LinkedList list = linkedListNew();
+    LinkedList* list = linkedListNew();
     bool isRunning = true;
 
     while (isRunning) {
@@ -20,26 +20,39 @@ int main(void)
             break;
         case 1: {
             int value = prompt("Введите элемент: ");
-            int index = sortedLinkedListInsert(&list, value);
-            printf("Элемент встроен в список по индексу %d\n", index);
+            int index = 0;
+	    LinkedListIterator* it = linkedListIteratorNew(list);
+	    int nodeValue = 0;
+	    while (linkedListIteratorNext(it, &nodeValue))
+            {
+                if (nodeValue <= value)
+                    index++;
+                else
+                    break;
+            }
+
+            bool ok = linkedListInsert(list, index, value);
+            printf("%s\n", ok ? "Элемент встроен в список" : "Неправильный индекс");
+	    linkedListIteratorFree(&it);
 
             break;
         }
         case 2: {
-            int len = linkedListCount(&list);
+            int len = linkedListCount(list);
             printf("Текущая длина списка: %d, ", len);
             int index = prompt("введите номер элемента для удаления: ");
-            bool res = linkedListRemove(&list, index);
+            bool res = linkedListRemove(list, index);
             printf("%s\n", res ? "Элемент удалён!" : "Неправильный индекс");
             break;
         }
         case 3:
-            linkedListPrintStdout(&list);
+            linkedListPrintStdout(list);
             printf("\n");
             break;
         }
     }
 
-    linkedListDelete(&list);
+    linkedListDelete(list);
+    linkedListFree(&list);
     return 0;
 }

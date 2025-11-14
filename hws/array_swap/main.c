@@ -25,6 +25,7 @@ int main(void)
     int len = m + n;
 
     int* array = malloc(len);
+    assert(array != NULL && "Allocation failed");
 
     for (int i = 0; i < len; i++) {
         printf("i = %d, ", i + 1);

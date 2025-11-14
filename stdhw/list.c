@@ -4,6 +4,7 @@
 #include <stdlib.h>
 
 #define ASSERT_LIST_NOT_NULL(list) assert(list != NULL && "List must have been initialized")
+#define ASSERT_ITERATOR_NOT_NULL(iterator) assert(iterator != NULL && "Iterator must have been initialized")
 
 // Элемент связного списка
 typedef struct LinkedListNode {
@@ -15,6 +16,35 @@ typedef struct LinkedListNode {
 typedef struct LinkedList {
     LinkedListNode* head;
 } LinkedList;
+
+typedef struct LinkedListIterator {
+    LinkedListNode* current;
+} LinkedListIterator;
+
+LinkedListIterator* linkedListIteratorNew(LinkedList* list)
+{
+    ASSERT_LIST_NOT_NULL(list);
+    LinkedListIterator* iterator = calloc(1, sizeof(*iterator));
+    iterator->current = list->head;
+    return iterator;
+}
+
+bool linkedListIteratorNext(LinkedListIterator* iterator, int* value)
+{
+    ASSERT_ITERATOR_NOT_NULL(iterator);
+    if (iterator->current == NULL)
+        return false;
+    *value = iterator->current->value;
+    iterator->current = iterator->current->next;
+    return iterator->current != NULL;
+}
+
+void linkedListIteratorFree(LinkedListIterator** iterator)
+{
+    ASSERT_ITERATOR_NOT_NULL(*iterator);
+    free(*iterator);
+    *iterator = NULL;
+}
 
 LinkedList* linkedListNew()
 {

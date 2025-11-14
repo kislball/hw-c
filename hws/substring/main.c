@@ -9,8 +9,8 @@ int main(void)
     char* s = promptString("S: ");
     char* s1 = promptString("S1: ");
 
-    int lenS = strlen(s);
-    int lenS1 = strlen(s1);
+    size_t lenS = strlen(s);
+    size_t lenS1 = strlen(s1);
 
     int n = 0;
 

@@ -9,7 +9,7 @@ int main(void)
     int n = 0;
     bool ok = true;
 
-    int len = strlen(input);
+    size_t len = strlen(input);
     for (int i = 0; i < len; i++) {
         if (input[i] == '(') {
             n += 1;

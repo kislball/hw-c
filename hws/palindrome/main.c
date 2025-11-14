@@ -8,7 +8,7 @@
 // Игнорирует пробелы. Возвращает true или false.
 bool isPalindrome(char* input)
 {
-    int len = strlen(input);
+    size_t len = strlen(input);
     char* left = input;
     char* right = input + len - 1;
 

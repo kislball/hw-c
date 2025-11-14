@@ -8,29 +8,33 @@
 
 #define TEST_STEPS 1000
 
-int main(int argc, char** argv)
+int main(void)
 {
     srand(time(NULL));
-    LinkedList list = linkedListNew();
+    LinkedList* list = linkedListNew();
 
     for (int i = 0; i < TEST_STEPS; i++) {
         if (rand() % 10 == 0) {
-            int len = linkedListCount(&list);
+            int len = linkedListCount(list);
             int target_idx = rand() % len;
-            linkedListRemove(&list, target_idx);
+            linkedListRemove(list, target_idx);
         } else {
             int val = rand();
-            sortedLinkedListInsert(&list, val);
+            sortedLinkedListInsert(list, val);
         }
     }
 
-    int previous = list.head->value;
-    LINKED_LIST_FOREACH(&list, node)
-    {
-        assert(previous <= node->value);
-        previous = node->value;
+    int previousValue = 0;
+    assert(linkedListGet(list, 0, &previousValue));
+
+    LinkedListIterator* it = linkedListIteratorNew(list);
+    int currentValue = 0;
+    while (linkedListIteratorNext(it, &currentValue)) {
+        assert(previousValue <= currentValue);
+        previousValue = currentValue;
     }
 
-    linkedListDelete(&list);
+    linkedListDelete(list);
+    linkedListFree(&list);
     return 0;
 }

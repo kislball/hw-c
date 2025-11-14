@@ -17,9 +17,9 @@ int main(void)
     if (lenS == lenS1 && strcmp(s, s1) == 0) {
         n = 1;
     } else if (lenS > lenS1) {
-        for (int i = 0; i <= lenS - lenS1; i++) {
+        for (size_t i = 0; i <= lenS - lenS1; i++) {
             bool ok = true;
-            for (int j = 0; j < lenS1; j++) {
+            for (size_t j = 0; j < lenS1; j++) {
                 if (s1[j] != s[j + i]) {
                     ok = false;
                     break;

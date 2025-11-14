@@ -2,7 +2,7 @@
 #include <stdbool.h>
 #include <stdlib.h>
 
-Stack stackNew()
+Stack stackNew(void)
 {
     Stack st = { .head = NULL, .size = 0 };
     return st;
@@ -59,3 +59,4 @@ void stackDelete(Stack* stack)
     stack->head = NULL;
     stack->size = 0;
 }
+

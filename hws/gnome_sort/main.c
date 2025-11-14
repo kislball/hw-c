@@ -20,7 +20,7 @@ void gnomeSort(int* input, int len)
     }
 }
 
-int main()
+int main(void)
 {
     int len = 0;
     int* input = promptIntArray("Введите массив чисел для сортировки", &len);

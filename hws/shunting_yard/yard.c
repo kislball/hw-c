@@ -6,11 +6,11 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define TOKEN_PLUS -1
-#define TOKEN_MINUS -2
-#define TOKEN_MUL -3
-#define TOKEN_DIV -4
-#define TOKEN_OPEN -5
+#define TOKEN_PLUS (-1)
+#define TOKEN_MINUS (-2)
+#define TOKEN_MUL (-3)
+#define TOKEN_DIV (-4)
+#define TOKEN_OPEN (-5)
 
 bool isOperator(char op)
 {
@@ -75,7 +75,7 @@ int getPriority(int op)
     }
 }
 
-bool populateStacks(Stack* output, Stack* operators, char* input)
+bool populateStacks(Stack* output, Stack* operators, const char* input)
 {
     bool ok = true;
 
@@ -135,7 +135,6 @@ bool populateStacks(Stack* output, Stack* operators, char* input)
 
 char* shuntingYard(char* input, Stack* output, Stack* operators)
 {
-    size_t inputLen = strlen(input);
     char* result = NULL;
 
     bool ok = populateStacks(output, operators, input);
@@ -148,7 +147,6 @@ char* shuntingYard(char* input, Stack* output, Stack* operators)
 
     ok = true;
     int terminated = false;
-    int i = output->size * 2 - 1;
 
     for (int i = output->size * 2 - 1; i > 0 && ok; i -= 2) {
         int v = stackPop(output, &ok);

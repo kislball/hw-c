@@ -26,7 +26,7 @@ bool isPalindrome(char* input)
     return true;
 }
 
-int main()
+int main(void)
 {
     char* input = promptString("Введите строку: ");
 

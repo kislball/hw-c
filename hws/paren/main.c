@@ -10,7 +10,7 @@ int main(void)
     bool ok = true;
 
     size_t len = strlen(input);
-    for (int i = 0; i < len; i++) {
+    for (size_t i = 0; i < len; i++) {
         if (input[i] == '(') {
             n += 1;
         } else if (input[i] == ')') {

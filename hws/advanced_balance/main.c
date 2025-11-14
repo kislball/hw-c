@@ -48,7 +48,7 @@ bool checkParenBalance(char* input)
     size_t len = strlen(input);
     Stack parens = stackNew();
 
-    for (int i = 0; i < len; i++) {
+    for (size_t i = 0; i < len; i++) {
         char current = input[i];
         if (!isParen(current))
             continue;

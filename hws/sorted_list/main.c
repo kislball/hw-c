@@ -5,9 +5,9 @@
 int main(void)
 {
     LinkedList list = linkedListNew();
-    bool work = true;
+    bool isRunning = true;
 
-    while (work) {
+    while (isRunning) {
         int op = prompt("Введите номер операции(0 - выход, 1 - добавление элемента, 2 - удалить значение, 3 - печать списка): ");
         if (op < 0 || op > 3) {
             printf("Неизвестная операция\n");
@@ -16,7 +16,7 @@ int main(void)
 
         switch (op) {
         case 0:
-            work = false;
+            isRunning = false;
             break;
         case 1: {
             int value = prompt("Введите элемент: ");

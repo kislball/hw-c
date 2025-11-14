@@ -59,4 +59,3 @@ void stackDelete(Stack* stack)
     stack->head = NULL;
     stack->size = 0;
 }
-

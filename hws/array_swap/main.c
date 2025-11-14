@@ -25,7 +25,7 @@ int main(void)
     int m = prompt("Введите m: ");
     int len = m + n;
 
-    int* array = malloc(len);
+    int* array = calloc(len, sizeof(*array));
     assert(array != NULL && "Allocation failed");
 
     for (int i = 0; i < len; i++) {

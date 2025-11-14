@@ -32,6 +32,3 @@ void linkedListFree(LinkedList** list);
 void linkedListPrint(LinkedList* list, void (*print)(int));
 // Вывод всех элементов списка в стандартный вывод
 void linkedListPrintStdout(LinkedList* list);
-
-// Макрос, позволяющий проходить циклом по всем элементам списка
-#define LINKED_LIST_FOREACH(list, node) for (LinkedListNode* node = (list)->head; (node) != NULL; (node) = (node)->next)

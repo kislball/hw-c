@@ -3,6 +3,11 @@
 
 typedef struct LinkedList LinkedList;
 typedef struct LinkedListNode LinkedListNode;
+typedef struct LinkedListIterator LinkedListIterator;
+
+LinkedListIterator* linkedListIteratorNew(LinkedList* list);
+bool linkedListIteratorNext(LinkedListIterator* iterator, int* value);
+void linkedListIteratorFree(LinkedListIterator** iterator);
 
 // Добавление элемента в список по заданному индексу
 bool linkedListInsert(LinkedList* list, int index, int value);

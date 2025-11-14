@@ -11,6 +11,7 @@ int main()
     linkedListInsert(list, 0, 10);
     linkedListInsert(list, 0, 20);
     linkedListInsert(list, 2, 30);
+    assert(linkedListCount(list) == 3 && "Elements are correctly counted");
 
     int v = 0;
     bool res = linkedListGet(list, 0, &v);
@@ -26,6 +27,7 @@ int main()
 
     assert(linkedListCount(list) == 3 && "Elements in a list are correctly counted");
     assert(linkedListRemove(list, 1) && "Removal is successful");
+    assert(linkedListCount(list) == 2 && "Elements are correctly counted");
     linkedListGet(list, 0, &v);
     assert(v == 20 && "Elements are correctly removed");
     linkedListGet(list, 1, &v);

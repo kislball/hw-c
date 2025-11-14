@@ -1,16 +1,8 @@
 #pragma once
 #include <stdbool.h>
 
-// Элемент связного списка
-typedef struct LinkedListNode {
-    int value;
-    struct LinkedListNode* next;
-} LinkedListNode;
-
-// Связный список
-typedef struct LinkedList {
-    LinkedListNode* head;
-} LinkedList;
+typedef struct LinkedList LinkedList;
+typedef struct LinkedListNode LinkedListNode;
 
 // Добавление элемента в список по заданному индексу
 bool linkedListInsert(LinkedList* list, int index, int value);
@@ -26,9 +18,11 @@ void linkedListAppend(LinkedList* to, LinkedList* from);
 int linkedListCount(LinkedList* list);
 
 // Создание нового связного списка
-LinkedList linkedListNew();
+LinkedList* linkedListNew();
 // Удаление всех элементов связного списка
 void linkedListDelete(LinkedList* list);
+// Освобождение списка
+void linkedListFree(LinkedList** list);
 // Вывод всех элементов списка используя функцию print(предоставляется пользователем)
 void linkedListPrint(LinkedList* list, void (*print)(int));
 // Вывод всех элементов списка в стандартный вывод

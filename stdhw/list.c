@@ -3,14 +3,36 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-LinkedList linkedListNew()
+#define ASSERT_LIST_NOT_NULL(list) assert(list != NULL && "List must have been initialized")
+
+// Элемент связного списка
+typedef struct LinkedListNode {
+    int value;
+    struct LinkedListNode* next;
+} LinkedListNode;
+
+// Связный список
+typedef struct LinkedList {
+    LinkedListNode* head;
+} LinkedList;
+
+LinkedList* linkedListNew()
 {
-    LinkedList list = { .head = NULL };
+    LinkedList* list = calloc(1, sizeof(*list));
+    list->head = NULL;
     return list;
+}
+
+void linkedListFree(LinkedList** list)
+{
+    ASSERT_LIST_NOT_NULL(*list);
+    free(*list);
+    *list = NULL;
 }
 
 bool linkedListInsertNode(LinkedList* list, int index, LinkedListNode* node)
 {
+    ASSERT_LIST_NOT_NULL(list);
     if (index < 0)
         return false;
     if (index == 0) {
@@ -30,6 +52,7 @@ bool linkedListInsertNode(LinkedList* list, int index, LinkedListNode* node)
 
 bool linkedListInsert(LinkedList* list, int index, int value)
 {
+    ASSERT_LIST_NOT_NULL(list);
     if (index < 0)
         return false;
     LinkedListNode* node = malloc(sizeof(LinkedListNode));
@@ -42,6 +65,7 @@ bool linkedListInsert(LinkedList* list, int index, int value)
 
 LinkedListNode* linkedListGetPointer(LinkedList* list, int index)
 {
+    ASSERT_LIST_NOT_NULL(list);
     if (index < 0)
         return NULL;
     LinkedListNode* ptr = list->head;
@@ -53,6 +77,7 @@ LinkedListNode* linkedListGetPointer(LinkedList* list, int index)
 
 bool linkedListGet(LinkedList* list, int index, int* value)
 {
+    ASSERT_LIST_NOT_NULL(list);
     if (index < 0)
         return false;
     LinkedListNode* ptr = linkedListGetPointer(list, index);
@@ -67,6 +92,7 @@ bool linkedListGet(LinkedList* list, int index, int* value)
 
 bool linkedListRemove(LinkedList* list, int index)
 {
+    ASSERT_LIST_NOT_NULL(list);
     if (index < 0)
         return false;
     if (index == 0) {
@@ -91,6 +117,7 @@ bool linkedListRemove(LinkedList* list, int index)
 
 void linkedListAppend(LinkedList* list, LinkedList* from)
 {
+    ASSERT_LIST_NOT_NULL(list);
     if (list->head == NULL) {
         list->head = from->head;
         from->head = NULL;
@@ -105,6 +132,7 @@ void linkedListAppend(LinkedList* list, LinkedList* from)
 
 int linkedListCount(LinkedList* list)
 {
+    ASSERT_LIST_NOT_NULL(list);
     int i = 0;
     LINKED_LIST_FOREACH(list, node)
     {
@@ -115,6 +143,7 @@ int linkedListCount(LinkedList* list)
 
 void linkedListDelete(LinkedList* list)
 {
+    ASSERT_LIST_NOT_NULL(list);
     while (linkedListRemove(list, 0)) { }
 }
 
@@ -125,6 +154,7 @@ void intPrinter(int value)
 
 void linkedListPrint(LinkedList* list, void (*printer)(int))
 {
+    ASSERT_LIST_NOT_NULL(list);
     LINKED_LIST_FOREACH(list, node)
     {
         printer(node->value);
@@ -133,5 +163,6 @@ void linkedListPrint(LinkedList* list, void (*printer)(int))
 
 void linkedListPrintStdout(LinkedList* list)
 {
+    ASSERT_LIST_NOT_NULL(list);
     linkedListPrint(list, intPrinter);
 }

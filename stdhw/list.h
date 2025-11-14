@@ -1,6 +1,7 @@
 #pragma once
 #include <stdbool.h>
 
+<<<<<<< HEAD
 // Связный список
 typedef struct LinkedList LinkedList;
 // Узел в связном списке
@@ -16,6 +17,21 @@ LinkedListIterator* linkedListIteratorNew(LinkedList* list);
 bool linkedListIteratorNext(LinkedListIterator* iterator, int* value);
 // Освобождает итератор.
 void linkedListIteratorFree(LinkedListIterator** iterator);
+||||||| parent of 8b20c56 (Refactor linked list into an ADT)
+// Элемент связного списка
+typedef struct LinkedListNode {
+    int value;
+    struct LinkedListNode* next;
+} LinkedListNode;
+
+// Связный список
+typedef struct LinkedList {
+    LinkedListNode* head;
+} LinkedList;
+=======
+typedef struct LinkedList LinkedList;
+typedef struct LinkedListNode LinkedListNode;
+>>>>>>> 8b20c56 (Refactor linked list into an ADT)
 
 // Добавление элемента в список по заданному индексу
 bool linkedListInsert(LinkedList* list, int index, int value);
@@ -32,7 +48,13 @@ void linkedListAppend(LinkedList* to, LinkedList* from);
 int linkedListCount(LinkedList* list);
 
 // Создание нового связного списка
+<<<<<<< HEAD
 LinkedList* linkedListNew(void);
+||||||| parent of 8b20c56 (Refactor linked list into an ADT)
+LinkedList linkedListNew();
+=======
+LinkedList* linkedListNew();
+>>>>>>> 8b20c56 (Refactor linked list into an ADT)
 // Удаление всех элементов связного списка
 void linkedListDelete(LinkedList* list);
 // Освобождение списка

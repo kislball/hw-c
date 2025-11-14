@@ -57,7 +57,7 @@ char intToToken(int op)
     case TOKEN_OPEN:
         return '(';
     default:
-        return (char)op + '0';
+        return (char)(op + '0');
     }
 }
 

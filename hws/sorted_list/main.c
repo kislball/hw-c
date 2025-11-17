@@ -21,10 +21,9 @@ int main()
         case 1: {
             int value = prompt("Введите элемент: ");
             int index = 0;
-	    LinkedListIterator* it = linkedListIteratorNew(list);
-	    int nodeValue = 0;
-	    while (linkedListIteratorNext(it, &nodeValue))
-            {
+            LinkedListIterator* it = linkedListIteratorNew(list);
+            int nodeValue = 0;
+            while (linkedListIteratorNext(it, &nodeValue)) {
                 if (nodeValue <= value)
                     index++;
                 else
@@ -33,7 +32,7 @@ int main()
 
             bool ok = linkedListInsert(list, index, value);
             printf("%s\n", ok ? "Элемент встроен в список" : "Неправильный индекс");
-	    linkedListIteratorFree(&it);
+            linkedListIteratorFree(&it);
 
             break;
         }

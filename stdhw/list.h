@@ -32,7 +32,7 @@ void linkedListAppend(LinkedList* to, LinkedList* from);
 int linkedListCount(LinkedList* list);
 
 // Создание нового связного списка
-LinkedList* linkedListNew();
+LinkedList* linkedListNew(void);
 // Удаление всех элементов связного списка
 void linkedListDelete(LinkedList* list);
 // Освобождение списка

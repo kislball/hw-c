@@ -3,10 +3,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define ASSERT_LIST_NOT_NULL(list) assert(list != NULL && "List must have been initialized")
-#define ASSERT_ITERATOR_NOT_NULL(iterator) assert(iterator != NULL && "Iterator must have been initialized")
+#define ASSERT_LIST_NOT_NULL(list) assert((list) != NULL && "List must have been initialized")
+#define ASSERT_ITERATOR_NOT_NULL(iterator) assert(( iterator ) != NULL && "Iterator must have been initialized")
 // now internal
-#define LINKED_LIST_FOREACH(list, node) for (LinkedListNode* node = (list)->head; (node) != NULL; (node) = (node)->next)
+#define LINKED_LIST_FOREACH(list, node) for (LinkedListNode* ( node ) = (list)->head; (node) != NULL; (node) = (node)->next)
 
 // Элемент связного списка
 typedef struct LinkedListNode {
@@ -152,17 +152,17 @@ bool linkedListRemove(LinkedList* list, int index)
     return true;
 }
 
-void linkedListAppend(LinkedList* list, LinkedList* from)
+void linkedListAppend(LinkedList* to, LinkedList* from)
 {
-    ASSERT_LIST_NOT_NULL(list);
+    ASSERT_LIST_NOT_NULL(to);
     ASSERT_LIST_NOT_NULL(from);
-    list->size += from->size;
-    if (list->head == NULL) {
-        list->head = from->head;
+    to->size += from->size;
+    if (to->head == NULL) {
+        to->head = from->head;
         from->head = NULL;
         return;
     }
-    LinkedListNode* last = list->head;
+    LinkedListNode* last = to->head;
     while (last->next != NULL)
         last = last->next;
     last->next = from->head;

@@ -3,7 +3,7 @@
 #include <stdhw.h>
 #include <stdio.h>
 
-int main()
+int main(void)
 {
     LinkedList* list = linkedListNew();
     assert(linkedListCount(list) == 0 && "List should have length zero");

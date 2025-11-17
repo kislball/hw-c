@@ -6,11 +6,11 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define TOKEN_PLUS -1
-#define TOKEN_MINUS -2
-#define TOKEN_MUL -3
-#define TOKEN_DIV -4
-#define TOKEN_OPEN -5
+#define TOKEN_PLUS (-1)
+#define TOKEN_MINUS (-2)
+#define TOKEN_MUL (-3)
+#define TOKEN_DIV (-4)
+#define TOKEN_OPEN (-5)
 
 bool isOperator(char op)
 {
@@ -57,7 +57,7 @@ char intToToken(int op)
     case TOKEN_OPEN:
         return '(';
     default:
-        return (char)op + '0';
+        return (char)(op + '0');
     }
 }
 
@@ -75,7 +75,7 @@ int getPriority(int op)
     }
 }
 
-bool populateStacks(Stack* output, Stack* operator, char* input)
+bool populateStacks(Stack* output, Stack* operators, const char* input)
 {
     bool ok = true;
 
@@ -92,18 +92,18 @@ bool populateStacks(Stack* output, Stack* operator, char* input)
             int priority = getPriority(tokenToInt(cur));
             bool isSuccessful = false;
             do {
-                int opType = stackPeek(operator, &isSuccessful);
+                int opType = stackPeek(operators, &isSuccessful);
                 if (!isSuccessful || getPriority(opType) < priority)
                     break;
-                stackPop(operator, &isSuccessful);
+                stackPop(operators, &isSuccessful);
                 stackPush(output, opType);
             } while (isSuccessful);
-            stackPush(operator, tokenToInt(cur));
+            stackPush(operators, tokenToInt(cur));
         } else if (cur == '(') {
-            stackPush(operator, TOKEN_OPEN);
+            stackPush(operators, TOKEN_OPEN);
         } else if (cur == ')') {
             bool isSuccessful = false;
-            int intOp = stackPop(operator, &isSuccessful);
+            int intOp = stackPop(operators, &isSuccessful);
             if (!isSuccessful) {
                 ok = false;
                 break;
@@ -111,7 +111,7 @@ bool populateStacks(Stack* output, Stack* operator, char* input)
 
             while (intOp != TOKEN_OPEN && isSuccessful) {
                 stackPush(output, intOp);
-                intOp = stackPop(operator, &isSuccessful);
+                intOp = stackPop(operators, &isSuccessful);
                 if (!isSuccessful) {
                     ok = false;
                 }
@@ -120,25 +120,24 @@ bool populateStacks(Stack* output, Stack* operator, char* input)
     }
 
     bool isSuccessful = false;
-    int op = stackPop(operator, &isSuccessful);
+    int op = stackPop(operators, &isSuccessful);
     while (isSuccessful) {
         if (op == TOKEN_OPEN) {
             ok = false;
             break;
         }
         stackPush(output, op);
-        op = stackPop(operator, &isSuccessful);
+        op = stackPop(operators, &isSuccessful);
     }
 
     return ok;
 }
 
-char* shuntingYard(char* input, Stack* output, Stack* operator)
+char* shuntingYard(char* input, Stack* output, Stack* operators)
 {
-    int inputLen = strlen(input);
     char* result = NULL;
 
-    bool ok = populateStacks(output, operator, input);
+    bool ok = populateStacks(output, operators, input);
     if (!ok)
         return NULL;
 
@@ -148,7 +147,6 @@ char* shuntingYard(char* input, Stack* output, Stack* operator)
 
     ok = true;
     int terminated = false;
-    int i = output->size * 2 - 1;
 
     for (int i = output->size * 2 - 1; i > 0 && ok; i -= 2) {
         int v = stackPop(output, &ok);
@@ -166,10 +164,10 @@ char* shuntingYard(char* input, Stack* output, Stack* operator)
 char* shuntingYardAlloc(char* input)
 {
     Stack output = stackNew();
-    Stack operator = stackNew();
+    Stack operators = stackNew();
 
-    char* result = shuntingYard(input, &output, &operator);
+    char* result = shuntingYard(input, &output, &operators);
     stackDelete(&output);
-    stackDelete(&operator);
+    stackDelete(&operators);
     return result;
 }

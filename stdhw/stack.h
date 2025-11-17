@@ -14,7 +14,7 @@ typedef struct {
 } Stack;
 
 // Инициализирует новый экземпляр структуры стек.
-Stack stackNew();
+Stack stackNew(void);
 // Освобождает память, занимаемую стеком.
 void stackDelete(Stack* stack);
 // Добавляет элемент на вершину стека. Возвращает false в случае ошибки, true - в ином случае.

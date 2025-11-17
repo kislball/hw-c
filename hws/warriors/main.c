@@ -35,9 +35,9 @@ int warriors(int n, int m)
             current = before->next;
         }
 
-	// clang-tidy жалуется на use-after-free(temp),
-	// однако это не так, ведь так как current более не используется, так как единственный указатель на него
-	// находится в before->next и при этом стирается до освобождения.
+        // clang-tidy жалуется на use-after-free(temp),
+        // однако это не так, ведь так как current более не используется, так как единственный указатель на него
+        // находится в before->next и при этом стирается до освобождения.
         before->next = current->next; // NOLINT
         Warrior* temp = current;
         current = current->next;

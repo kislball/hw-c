@@ -4,9 +4,9 @@
 #include <stdlib.h>
 
 #define ASSERT_LIST_NOT_NULL(list) assert((list) != NULL && "List must have been initialized")
-#define ASSERT_ITERATOR_NOT_NULL(iterator) assert(( iterator ) != NULL && "Iterator must have been initialized")
+#define ASSERT_ITERATOR_NOT_NULL(iterator) assert((iterator) != NULL && "Iterator must have been initialized")
 // now internal
-#define LINKED_LIST_FOREACH(list, node) for (LinkedListNode* ( node ) = (list)->head; (node) != NULL; (node) = (node)->next)
+#define LINKED_LIST_FOREACH(list, node) for (LinkedListNode * (node) = (list)->head; (node) != NULL; (node) = (node)->next)
 
 // Элемент связного списка
 typedef struct LinkedListNode {

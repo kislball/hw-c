@@ -49,7 +49,7 @@ void linkedListIteratorFree(LinkedListIterator** iterator)
     *iterator = NULL;
 }
 
-LinkedList* linkedListNew()
+LinkedList* linkedListNew(void)
 {
     LinkedList* list = calloc(1, sizeof(*list));
     list->head = NULL;

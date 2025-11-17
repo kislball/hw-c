@@ -9,10 +9,6 @@ int main(void)
 
     while (isRunning) {
         int op = prompt("Введите номер операции(0 - выход, 1 - добавление элемента, 2 - удалить значение, 3 - печать списка): ");
-        if (op < 0 || op > 3) {
-            printf("Неизвестная операция\n");
-            continue;
-        }
 
         switch (op) {
         case 0:
@@ -47,6 +43,9 @@ int main(void)
         case 3:
             linkedListPrintStdout(list);
             printf("\n");
+            break;
+        default:
+            printf("Неизвестная операция\n");
             break;
         }
     }

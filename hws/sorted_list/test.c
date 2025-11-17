@@ -10,16 +10,18 @@
 
 int main(void)
 {
-    srand(time(NULL));
+    // Некоторые проверки касаемо rand были отключены, так как в данном случае
+    // отсутствует необходимость в сильном рандоме.
+    srand(time(NULL)); // NOLINT(cert-msc51-cpp)
     LinkedList* list = linkedListNew();
 
     for (int i = 0; i < TEST_STEPS; i++) {
-        if (rand() % 10 == 0) {
+        if (rand() % 10 == 0) { // NOLINT(cert-msc50-cpp)
             int len = linkedListCount(list);
-            int target_idx = rand() % len;
-            linkedListRemove(list, target_idx);
+            int targetIdx = rand() % len; // NOLINT(cert-msc50-cpp)
+            linkedListRemove(list, targetIdx);
         } else {
-            int val = rand();
+            int val = rand(); // NOLINT(cert-msc50-cpp)
             sortedLinkedListInsert(list, val);
         }
     }

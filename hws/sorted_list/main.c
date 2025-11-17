@@ -1,4 +1,4 @@
-#include "list.h"
+#include "sortedList.h"
 #include <stdhw.h>
 #include <stdio.h>
 
@@ -16,19 +16,8 @@ int main(void)
             break;
         case 1: {
             int value = prompt("Введите элемент: ");
-            int index = 0;
-            LinkedListIterator* it = linkedListIteratorNew(list);
-            int nodeValue = 0;
-            while (linkedListIteratorNext(it, &nodeValue)) {
-                if (nodeValue <= value)
-                    index++;
-                else
-                    break;
-            }
-
-            bool ok = linkedListInsert(list, index, value);
-            printf("%s\n", ok ? "Элемент встроен в список" : "Неправильный индекс");
-            linkedListIteratorFree(&it);
+            int index = sortedLinkedListInsert(list, value);
+            printf("Элемент встроен в список по индексу %d\n", index);
 
             break;
         }

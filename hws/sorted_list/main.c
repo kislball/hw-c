@@ -2,17 +2,13 @@
 #include <stdhw.h>
 #include <stdio.h>
 
-int main()
+int main(void)
 {
     LinkedList* list = linkedListNew();
     bool isRunning = true;
 
     while (isRunning) {
         int op = prompt("Введите номер операции(0 - выход, 1 - добавление элемента, 2 - удалить значение, 3 - печать списка): ");
-        if (op < 0 || op > 3) {
-            printf("Неизвестная операция\n");
-            continue;
-        }
 
         switch (op) {
         case 0:
@@ -47,6 +43,9 @@ int main()
         case 3:
             linkedListPrintStdout(list);
             printf("\n");
+            break;
+        default:
+            printf("Неизвестная операция\n");
             break;
         }
     }

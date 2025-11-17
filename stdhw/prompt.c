@@ -27,11 +27,11 @@ int prompt(char* data)
 
 char* promptString(char* promptString)
 {
-    size_t initial_buffer_size = 16;
+    size_t initialBufferSize = 16;
     printf("%s", promptString);
 
-    char* buffer = malloc(sizeof(char) * initial_buffer_size);
-    int size = getline(&buffer, &initial_buffer_size, stdin);
+    char* buffer = malloc(sizeof(char) * initialBufferSize);
+    size_t size = getline(&buffer, &initialBufferSize, stdin);
     // Removing newline character in the end
     buffer[size - 1] = '\0';
 

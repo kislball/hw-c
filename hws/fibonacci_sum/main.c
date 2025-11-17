@@ -3,7 +3,7 @@
 #include <stdlib.h>
 
 // Программа считает сумму всех чётных чисел Фибоначчи не превышающих миллиона.
-int main()
+int main(void)
 {
     int prev = 1, current = 1;
     int sum = 0;

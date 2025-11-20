@@ -19,15 +19,14 @@ void checkInBoundaries(double low, double high)
         BinaryNumber binNum = decodeNumber(num);
         assert((num >= 0 ? !binNum.sign : binNum.sign) && "Sign must match");
         int exp = 0;
-        double mantissa = frexp(fabs(num), &exp);
         exp--;
         assert(exp == binNum.exponent && "Exponents must match");
     }
 }
 
-int main()
+int main(void)
 {
-    srand((unsigned int)time(0));
+    srand((unsigned int)time(0)); // NOLINT(cert-msc51-cpp)
 
     checkInBoundaries(-10000, 10000);
     checkInBoundaries(-1, 1);

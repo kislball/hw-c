@@ -3,7 +3,7 @@
 
 typedef struct {
     bool sign;
-    uint16_t exponent;
+    int16_t exponent;
     double mantissa;
 } BinaryNumber;
 

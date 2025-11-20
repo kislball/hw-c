@@ -1,9 +1,9 @@
+#include "number.h"
 #include <assert.h>
+#include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include "number.h"
 #include <time.h>
-#include <math.h>
 
 #define TOTAL_TESTS 1000
 

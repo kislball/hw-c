@@ -9,7 +9,7 @@
 
 double randDouble(double low, double high)
 {
-    return ((double)rand() * (high - low)) / (double)RAND_MAX + low;
+    return ((double)rand() * (high - low)) / (double)RAND_MAX + low; // NOLINT(cert-msc50-cpp)
 }
 
 void checkInBoundaries(double low, double high)
@@ -19,6 +19,7 @@ void checkInBoundaries(double low, double high)
         BinaryNumber binNum = decodeNumber(num);
         assert((num >= 0 ? !binNum.sign : binNum.sign) && "Sign must match");
         int exp = 0;
+        frexp(fabs(num), &exp);
         exp--;
         assert(exp == binNum.exponent && "Exponents must match");
     }

@@ -29,6 +29,10 @@ int main(void)
 	int realResult = complementToInt(result);
 	printf("\na+b=%d\n", realResult);
 
+	free(result);
+	free(aComplement);
+	free(bComplement);
+
 	assert(a + b == realResult);
 
 	return 0;

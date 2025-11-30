@@ -1,39 +1,39 @@
 #include "addition.h"
 #include <assert.h>
-#include <stdio.h>
 #include <stdhw.h>
+#include <stdio.h>
 #include <stdlib.h>
 
 int main(void)
 {
-	int a = prompt("a=");
-	int b = prompt("b=");
+    int a = prompt("a=");
+    int b = prompt("b=");
 
-	int *aComplement = allocateBits();
-	int *bComplement = allocateBits();
+    int* aComplement = allocateBits();
+    int* bComplement = allocateBits();
 
-	intToComplement(a, aComplement);
-	intToComplement(b, bComplement);
+    intToComplement(a, aComplement);
+    intToComplement(b, bComplement);
 
-	printf("a=  ");
-	printBits(aComplement);
-	printf("\nb=  ");
-	printBits(bComplement);
+    printf("a=  ");
+    printBits(aComplement);
+    printf("\nb=  ");
+    printBits(bComplement);
 
-	int *result = allocateBits();
-	addBits(aComplement, bComplement, result);
+    int* result = allocateBits();
+    addBits(aComplement, bComplement, result);
 
-	printf("\na+b=");
-	printBits(result);
+    printf("\na+b=");
+    printBits(result);
 
-	int realResult = complementToInt(result);
-	printf("\na+b=%d\n", realResult);
+    int realResult = complementToInt(result);
+    printf("\na+b=%d\n", realResult);
 
-	free(result);
-	free(aComplement);
-	free(bComplement);
+    free(result);
+    free(aComplement);
+    free(bComplement);
 
-	assert(a + b == realResult);
+    assert(a + b == realResult);
 
-	return 0;
+    return 0;
 }

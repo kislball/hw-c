@@ -5,27 +5,26 @@
 
 void testReverse(void)
 {
-	LinkedList* list = linkedListNew();
+    LinkedList* list = linkedListNew();
 
-	linkedListInsert(list, 0, 1);
-	linkedListInsert(list, 1, 2);
-	linkedListInsert(list, 2, 3);
-	linkedListInsert(list, 3, 4);
+    linkedListInsert(list, 0, 1);
+    linkedListInsert(list, 1, 2);
+    linkedListInsert(list, 2, 3);
+    linkedListInsert(list, 3, 4);
 
-	LinkedList* reversed = linkedListReverse(list);
-	assert(linkedListCount(reversed) == linkedListCount(list) && "Lists have the same length");
-	
-	int value = 0;
-	assert(linkedListGet(reversed, 0, &value) && value == 4 && "List is properly reversed");
-	assert(linkedListGet(reversed, 1, &value) && value == 3 && "List is properly reversed");
-	assert(linkedListGet(reversed, 2, &value) && value == 2 && "List is properly reversed");
-	assert(linkedListGet(reversed, 3, &value) && value == 1 && "List is properly reversed");
+    LinkedList* reversed = linkedListReverse(list);
+    assert(linkedListCount(reversed) == linkedListCount(list) && "Lists have the same length");
 
-	linkedListFree(&list);
-	linkedListFree(&reversed);
-	assert(list == NULL && reversed == NULL && "Pointers are NULL after free");
+    int value = 0;
+    assert(linkedListGet(reversed, 0, &value) && value == 4 && "List is properly reversed");
+    assert(linkedListGet(reversed, 1, &value) && value == 3 && "List is properly reversed");
+    assert(linkedListGet(reversed, 2, &value) && value == 2 && "List is properly reversed");
+    assert(linkedListGet(reversed, 3, &value) && value == 1 && "List is properly reversed");
+
+    linkedListFree(&list);
+    linkedListFree(&reversed);
+    assert(list == NULL && reversed == NULL && "Pointers are NULL after free");
 }
-
 
 int main(void)
 {

@@ -51,16 +51,16 @@ void linkedListIteratorFree(LinkedListIterator** iterator)
 
 LinkedList* linkedListReverse(LinkedList* list)
 {
-	LinkedList* result = linkedListNew();
-	LinkedListIterator* it = linkedListIteratorNew(list);
-	int value = 0;
+    LinkedList* result = linkedListNew();
+    LinkedListIterator* it = linkedListIteratorNew(list);
+    int value = 0;
 
-	while (linkedListIteratorNext(it, &value)) {
-		linkedListInsert(result, 0, value);
-	}
+    while (linkedListIteratorNext(it, &value)) {
+        linkedListInsert(result, 0, value);
+    }
 
-	linkedListIteratorFree(&it);
-	return result;
+    linkedListIteratorFree(&it);
+    return result;
 }
 
 LinkedList* linkedListNew(void)

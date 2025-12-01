@@ -12,4 +12,4 @@ typedef enum {
 } ComparisonResult;
 
 // Сравнивает два числа побитово
-ComparisonResult compare(int32_t a, int32_t b);
+ComparisonResult compare(uint32_t a, uint32_t b);

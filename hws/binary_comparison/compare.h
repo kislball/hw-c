@@ -1,3 +1,7 @@
+#pragma once
+
+#include <stdint.h>
+
 #define BITS 32
 
 // Результат сравнения двух чисел
@@ -8,4 +12,4 @@ typedef enum {
 } ComparisonResult;
 
 // Сравнивает два числа побитово
-ComparisonResult compare(int a, int b);
+ComparisonResult compare(int32_t a, int32_t b);

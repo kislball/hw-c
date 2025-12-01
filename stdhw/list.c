@@ -49,6 +49,20 @@ void linkedListIteratorFree(LinkedListIterator** iterator)
     *iterator = NULL;
 }
 
+LinkedList* linkedListReverse(LinkedList* list)
+{
+	LinkedList* result = linkedListNew();
+	LinkedListIterator* it = linkedListIteratorNew(list);
+	int value = 0;
+
+	while (linkedListIteratorNext(it, &value)) {
+		linkedListInsert(result, 0, value);
+	}
+
+	linkedListIteratorFree(&it);
+	return result;
+}
+
 LinkedList* linkedListNew(void)
 {
     LinkedList* list = calloc(1, sizeof(*list));

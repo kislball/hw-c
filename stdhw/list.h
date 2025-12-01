@@ -30,6 +30,8 @@ bool linkedListRemove(LinkedList* list, int index);
 void linkedListAppend(LinkedList* to, LinkedList* from);
 // Возвращает количество элементов в списке
 int linkedListCount(LinkedList* list);
+// Возвращает новый обращённый связный список
+LinkedList* linkedListReverse(LinkedList*);
 
 // Создание нового связного списка
 LinkedList* linkedListNew(void);

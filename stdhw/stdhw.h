@@ -1,3 +1,4 @@
 #include "list.h"
 #include "prompt.h"
+#include "queue.h"
 #include "stack.h"

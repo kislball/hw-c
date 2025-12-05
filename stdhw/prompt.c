@@ -25,6 +25,14 @@ int prompt(char* data)
     return ans;
 }
 
+double promptDouble(char* data)
+{
+    double ans = 0;
+    printf("%s", data);
+    scanf("%lf", &ans);
+    return ans;
+}
+
 char* promptString(char* promptString)
 {
     size_t initialBufferSize = 16;

@@ -4,7 +4,7 @@ project(Homeworks C ASM)
 if(MSVC)
 	add_compile_options(/W4 /WX)	
 else()
-	add_compile_options(-Wall -Wextra -Wpedantic)	
+	add_compile_options(-g -Wall -Wextra -Wpedantic)	
 endif()
 
 include(CTest)

@@ -10,7 +10,7 @@
 
 // Элемент связного списка
 typedef struct LinkedListNode {
-    int value;
+    void* value;
     struct LinkedListNode* next;
 } LinkedListNode;
 
@@ -32,7 +32,7 @@ LinkedListIterator* linkedListIteratorNew(LinkedList* list)
     return iterator;
 }
 
-bool linkedListIteratorNext(LinkedListIterator* iterator, int* value)
+bool linkedListIteratorNext(LinkedListIterator* iterator, void** value)
 {
     ASSERT_ITERATOR_NOT_NULL(iterator);
     if (iterator->current == NULL)
@@ -53,7 +53,7 @@ LinkedList* linkedListReverse(LinkedList* list)
 {
     LinkedList* result = linkedListNew();
     LinkedListIterator* it = linkedListIteratorNew(list);
-    int value = 0;
+	void* value = 0;
 
     while (linkedListIteratorNext(it, &value)) {
         linkedListInsert(result, 0, value);
@@ -99,7 +99,7 @@ bool linkedListInsertNode(LinkedList* list, int index, LinkedListNode* node)
     return true;
 }
 
-bool linkedListInsert(LinkedList* list, int index, int value)
+bool linkedListInsert(LinkedList* list, int index, void* value)
 {
     ASSERT_LIST_NOT_NULL(list);
     if (index < 0)
@@ -124,7 +124,7 @@ LinkedListNode* linkedListGetPointer(LinkedList* list, int index)
     return ptr;
 }
 
-bool linkedListGet(LinkedList* list, int index, int* value)
+bool linkedListGet(LinkedList* list, int index, void** value)
 {
     ASSERT_LIST_NOT_NULL(list);
     if (index < 0)
@@ -194,12 +194,12 @@ void linkedListDelete(LinkedList* list)
     while (linkedListRemove(list, 0)) { }
 }
 
-void intPrinter(int value)
+static void pointerPrinter(void* value)
 {
-    printf("%d ", value);
+    printf("%p", value);
 }
 
-void linkedListPrint(LinkedList* list, void (*printer)(int))
+void linkedListPrint(LinkedList* list, void (*printer)(void*))
 {
     ASSERT_LIST_NOT_NULL(list);
     LINKED_LIST_FOREACH(list, node)
@@ -211,5 +211,5 @@ void linkedListPrint(LinkedList* list, void (*printer)(int))
 void linkedListPrintStdout(LinkedList* list)
 {
     ASSERT_LIST_NOT_NULL(list);
-    linkedListPrint(list, intPrinter);
+    linkedListPrint(list, pointerPrinter);
 }

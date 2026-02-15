@@ -6,16 +6,22 @@
 int main(void)
 {
     Queue* q = queueNew();
-    queueEnqueue(q, 1);
-    queueEnqueue(q, 2);
-    queueEnqueue(q, 3);
 
-    int value = 0;
-    assert(queueDequeue(q, &value) && value == 1 && "Queue outputs elements in correct order");
-    assert(queueDequeue(q, &value) && value == 2 && "Queue outputs elements in correct order");
-    queueEnqueue(q, 4);
-    assert(queueDequeue(q, &value) && value == 3 && "Queue outputs elements in correct order");
-    assert(queueDequeue(q, &value) && value == 4 && "Queue outputs elements in correct order");
+    int a = 1;
+    int b = 2;
+    int c = 3;
+    int d = 4;
+
+    queueEnqueue(q, &a);
+    queueEnqueue(q, &b);
+    queueEnqueue(q, &c);
+
+    void* value = 0;
+    assert(queueDequeue(q, &value) && *(int*)value == 1 && "Queue outputs elements in correct order");
+    assert(queueDequeue(q, &value) && *(int*)value == 2 && "Queue outputs elements in correct order");
+    queueEnqueue(q, &d);
+    assert(queueDequeue(q, &value) && *(int*)value == 3 && "Queue outputs elements in correct order");
+    assert(queueDequeue(q, &value) && *(int*)value == 4 && "Queue outputs elements in correct order");
     assert(!queueDequeue(q, &value) && "Queue is empty");
 
     queueFree(&q);

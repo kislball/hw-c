@@ -8,7 +8,7 @@ Stack stackNew(void)
     return st;
 }
 
-bool stackPush(Stack* stack, int value)
+bool stackPush(Stack* stack, void* value)
 {
     StackNode* node = malloc(sizeof(StackNode));
     if (node == NULL) {
@@ -23,7 +23,7 @@ bool stackPush(Stack* stack, int value)
     return true;
 }
 
-int stackPeek(Stack* stack, bool* isSuccessful)
+void* stackPeek(Stack* stack, bool* isSuccessful)
 {
     if (stack->head == NULL) {
         *isSuccessful = false;
@@ -34,9 +34,9 @@ int stackPeek(Stack* stack, bool* isSuccessful)
     }
 }
 
-int stackPop(Stack* stack, bool* isSuccessful)
+void* stackPop(Stack* stack, bool* isSuccessful)
 {
-    int val = stackPeek(stack, isSuccessful);
+    void* val = stackPeek(stack, isSuccessful);
     if (!*isSuccessful) {
         return 0;
     }

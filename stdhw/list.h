@@ -13,14 +13,14 @@ LinkedListIterator* linkedListIteratorNew(LinkedList* list);
 // Получение следующего элемента в связном списке с помощью итератора.
 // Сохраняет значение в указатель value, возвращает true если было получено
 // новое значение, в ином случае false.
-bool linkedListIteratorNext(LinkedListIterator* iterator, int* value);
+bool linkedListIteratorNext(LinkedListIterator* iterator, void** value);
 // Освобождает итератор.
 void linkedListIteratorFree(LinkedListIterator** iterator);
 
 // Добавление элемента в список по заданному индексу
-bool linkedListInsert(LinkedList* list, int index, int value);
+bool linkedListInsert(LinkedList* list, int index, void* value);
 // Получение элемента по заданному списку
-bool linkedListGet(LinkedList* list, int index, int* value);
+bool linkedListGet(LinkedList* list, int index, void** value);
 // Получение указателя на узел по заданному индексу
 LinkedListNode* linkedListGetPointer(LinkedList* list, int index);
 // Удаление элемента из списка по задданому индексу
@@ -40,6 +40,6 @@ void linkedListDelete(LinkedList* list);
 // Освобождение списка
 void linkedListFree(LinkedList** list);
 // Вывод всех элементов списка используя функцию print(предоставляется пользователем)
-void linkedListPrint(LinkedList* list, void (*print)(int));
+void linkedListPrint(LinkedList* list, void (*print)(void*));
 // Вывод всех элементов списка в стандартный вывод
 void linkedListPrintStdout(LinkedList* list);

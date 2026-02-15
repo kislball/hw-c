@@ -34,7 +34,7 @@ void queueSwapHeadAndTail(Queue* q)
     q->head = reversed;
 }
 
-void queueEnqueue(Queue* q, int value)
+void queueEnqueue(Queue* q, void* value)
 {
     queueAssertInvariant(q);
     linkedListInsert(q->tail, linkedListCount(q->tail), value);
@@ -43,7 +43,7 @@ void queueEnqueue(Queue* q, int value)
     queueAssertInvariant(q);
 }
 
-bool queueDequeue(Queue* q, int* value)
+bool queueDequeue(Queue* q, void** value)
 {
     int count = linkedListCount(q->head);
 

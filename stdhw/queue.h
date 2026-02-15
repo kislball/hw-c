@@ -10,7 +10,7 @@ Queue* queueNew(void);
 // Освобождает очередь
 void queueFree(Queue**);
 // Добавляет элемент в очередь
-void queueEnqueue(Queue*, int);
+void queueEnqueue(Queue*, void*);
 // Вытаскивает элемент из очереди. Возвращает true если очередь не пуста(и записывает значение по указателю на int),
 // в ином случае false.
-bool queueDequeue(Queue*, int*);
+bool queueDequeue(Queue*, void**);

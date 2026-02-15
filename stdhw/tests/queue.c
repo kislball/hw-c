@@ -17,12 +17,12 @@ int main(void)
     queueEnqueue(q, &c);
 
     void* value = 0;
-    assert(queueDequeue(q, &value) && *(int*)value == 1 && "Queue outputs elements in correct order");
-    assert(queueDequeue(q, &value) && *(int*)value == 2 && "Queue outputs elements in correct order");
+    assert(queueDequeue(q, &value, false) && *(int*)value == 1 && "Queue outputs elements in correct order");
+    assert(queueDequeue(q, &value, false) && *(int*)value == 2 && "Queue outputs elements in correct order");
     queueEnqueue(q, &d);
-    assert(queueDequeue(q, &value) && *(int*)value == 3 && "Queue outputs elements in correct order");
-    assert(queueDequeue(q, &value) && *(int*)value == 4 && "Queue outputs elements in correct order");
-    assert(!queueDequeue(q, &value) && "Queue is empty");
+    assert(queueDequeue(q, &value, false) && *(int*)value == 3 && "Queue outputs elements in correct order");
+    assert(queueDequeue(q, &value, false) && *(int*)value == 4 && "Queue outputs elements in correct order");
+    assert(!queueDequeue(q, &value, false) && "Queue is empty");
 
     queueFree(&q);
     assert(q == NULL && "Pointer must have been deinitialized");

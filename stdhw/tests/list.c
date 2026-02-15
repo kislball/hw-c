@@ -12,10 +12,10 @@ void testReverse(void)
     int c = 3;
     int d = 4;
 
-    linkedListInsert(list, 0, &a);
-    linkedListInsert(list, 1, &b);
-    linkedListInsert(list, 2, &c);
-    linkedListInsert(list, 3, &d);
+    linkedListInsert(list, 0, &a, false);
+    linkedListInsert(list, 1, &b, false);
+    linkedListInsert(list, 2, &c, false);
+    linkedListInsert(list, 3, &d, false);
 
     LinkedList* reversed = linkedListReverse(list);
     assert(linkedListCount(reversed) == linkedListCount(list) && "Lists have the same length");
@@ -39,9 +39,9 @@ int main(void)
     int b = 20;
     int c = 30;
 
-    linkedListInsert(list, 0, &a);
-    linkedListInsert(list, 0, &b);
-    linkedListInsert(list, 2, &c);
+    linkedListInsert(list, 0, &a, false);
+    linkedListInsert(list, 0, &b, false);
+    linkedListInsert(list, 2, &c, false);
     assert(linkedListCount(list) == 3 && "Elements are correctly counted");
 
     void* v = 0;
@@ -57,7 +57,7 @@ int main(void)
     assert(*(int*)v == 30 && "Elements are inserted in the correct order");
 
     assert(linkedListCount(list) == 3 && "Elements in a list are correctly counted");
-    assert(linkedListRemove(list, 1) && "Removal is successful");
+    assert(linkedListRemove(list, 1, false) && "Removal is successful");
     assert(linkedListCount(list) == 2 && "Elements are correctly counted");
     linkedListGet(list, 0, &v);
     assert(*(int*)v == 20 && "Elements are correctly removed");

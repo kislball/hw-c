@@ -1,7 +1,9 @@
 #pragma once
+#include "destruct.h"
 #include <stdbool.h>
 
-// Связный список
+// Связный список. Считаеся, что с момента добавления элемента в список,
+// он принадлежит списку, т.е. очищается исключительно самим списком используя деструктор.
 typedef struct LinkedList LinkedList;
 // Узел в связном списке
 typedef struct LinkedListNode LinkedListNode;
@@ -18,13 +20,17 @@ bool linkedListIteratorNext(LinkedListIterator* iterator, void** value);
 void linkedListIteratorFree(LinkedListIterator** iterator);
 
 // Добавление элемента в список по заданному индексу
-bool linkedListInsert(LinkedList* list, int index, void* value);
+// При значении true в аргументе destroyIfFailed, функция запустит деструктор для элемента
+// при ошибке встраивания.
+bool linkedListInsert(LinkedList* list, int index, void* value, bool destroyIfFailed);
 // Получение элемента по заданному списку
 bool linkedListGet(LinkedList* list, int index, void** value);
 // Получение указателя на узел по заданному индексу
 LinkedListNode* linkedListGetPointer(LinkedList* list, int index);
 // Удаление элемента из списка по задданому индексу
-bool linkedListRemove(LinkedList* list, int index);
+// При значении последнего аргумента true, функция запустит деструктор для
+// удаляемого элемента(если деструктор был определён).
+bool linkedListRemove(LinkedList* list, int index, bool destroy);
 // Добавление элементов из from в to
 // При этом элементы списка from будут перемещены, а он сам будет опустошён
 void linkedListAppend(LinkedList* to, LinkedList* from);
@@ -35,6 +41,8 @@ LinkedList* linkedListReverse(LinkedList*);
 
 // Создание нового связного списка
 LinkedList* linkedListNew(void);
+// Создание нового связного списка с указанным деструктором элементов
+LinkedList* linkedListNewWithDestructor(Destructor);
 // Удаление всех элементов связного списка
 void linkedListDelete(LinkedList* list);
 // Освобождение списка

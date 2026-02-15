@@ -1,11 +1,17 @@
 #include "stack.h"
+#include "destruct.h"
 #include <stdbool.h>
 #include <stdlib.h>
 
+Stack stackNewWithDestructor(Destructor destruct)
+{
+    Stack st = { .head = NULL, .size = 0, .destruct = destruct };
+    return st;
+}
+
 Stack stackNew(void)
 {
-    Stack st = { .head = NULL, .size = 0 };
-    return st;
+    return stackNewWithDestructor(NULL);
 }
 
 bool stackPush(Stack* stack, void* value)

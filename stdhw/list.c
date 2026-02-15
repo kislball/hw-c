@@ -1,4 +1,5 @@
 #include "list.h"
+#include "destruct.h"
 #include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -18,6 +19,7 @@ typedef struct LinkedListNode {
 typedef struct LinkedList {
     LinkedListNode* head;
     int size;
+    Destructor destruct;
 } LinkedList;
 
 typedef struct LinkedListIterator {
@@ -51,28 +53,35 @@ void linkedListIteratorFree(LinkedListIterator** iterator)
 
 LinkedList* linkedListReverse(LinkedList* list)
 {
-    LinkedList* result = linkedListNew();
+    LinkedList* result = linkedListNewWithDestructor(list->destruct);
     LinkedListIterator* it = linkedListIteratorNew(list);
 	void* value = 0;
 
     while (linkedListIteratorNext(it, &value)) {
-        linkedListInsert(result, 0, value);
+        linkedListInsert(result, 0, value, false);
     }
 
     linkedListIteratorFree(&it);
     return result;
 }
 
-LinkedList* linkedListNew(void)
+LinkedList* linkedListNewWithDestructor(Destructor destruct)
 {
     LinkedList* list = calloc(1, sizeof(*list));
     list->head = NULL;
+    list->destruct = destruct;
     return list;
+}
+
+LinkedList* linkedListNew(void)
+{
+    return linkedListNewWithDestructor(NULL);
 }
 
 void linkedListFree(LinkedList** list)
 {
     ASSERT_LIST_NOT_NULL(*list);
+    linkedListDelete(*list);
     free(*list);
     *list = NULL;
 }
@@ -99,7 +108,7 @@ bool linkedListInsertNode(LinkedList* list, int index, LinkedListNode* node)
     return true;
 }
 
-bool linkedListInsert(LinkedList* list, int index, void* value)
+bool linkedListInsert(LinkedList* list, int index, void* value, bool destroyIfFailed)
 {
     ASSERT_LIST_NOT_NULL(list);
     if (index < 0)
@@ -107,8 +116,10 @@ bool linkedListInsert(LinkedList* list, int index, void* value)
     LinkedListNode* node = malloc(sizeof(LinkedListNode));
     node->value = value;
     bool ok = linkedListInsertNode(list, index, node);
-    if (!ok)
+    if (!ok) {
+	if (list->destruct && destroyIfFailed) list->destruct(node->value);
         free(node);
+    }
     return ok;
 }
 
@@ -139,7 +150,7 @@ bool linkedListGet(LinkedList* list, int index, void** value)
     }
 }
 
-bool linkedListRemove(LinkedList* list, int index)
+bool linkedListRemove(LinkedList* list, int index, bool destroy)
 {
     ASSERT_LIST_NOT_NULL(list);
     if (index < 0)
@@ -148,6 +159,7 @@ bool linkedListRemove(LinkedList* list, int index)
         if (list->head == NULL)
             return false;
         LinkedListNode* next = list->head->next;
+	if (list->destruct && destroy) list->destruct(list->head->value);
         free(list->head);
         list->head = next;
         list->size--;
@@ -162,6 +174,7 @@ bool linkedListRemove(LinkedList* list, int index)
         return false;
     before->next = toBeRemoved->next;
     list->size--;
+if (list->destruct && destroy) list->destruct(toBeRemoved->value);
     free(toBeRemoved);
     return true;
 }
@@ -191,7 +204,7 @@ int linkedListCount(LinkedList* list)
 void linkedListDelete(LinkedList* list)
 {
     ASSERT_LIST_NOT_NULL(list);
-    while (linkedListRemove(list, 0)) { }
+    while (linkedListRemove(list, 0, true)) { }
 }
 
 static void pointerPrinter(void* value)

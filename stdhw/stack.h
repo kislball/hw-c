@@ -1,4 +1,5 @@
 #pragma once
+#include "destruct.h"
 #include <stdbool.h>
 
 // Элемент на стеке.
@@ -11,10 +12,13 @@ typedef struct StackNode {
 typedef struct {
     StackNode* head;
     int size;
+    Destructor destruct;
 } Stack;
 
 // Инициализирует новый экземпляр структуры стек.
 Stack stackNew(void);
+// Инициализирует новый экземпляр структуры стек с заданным деструктором.
+Stack stackNewWithDestructor(Destructor);
 // Освобождает память, занимаемую стеком.
 void stackDelete(Stack* stack);
 // Добавляет элемент на вершину стека. Возвращает false в случае ошибки, true - в ином случае.

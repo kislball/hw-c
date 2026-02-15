@@ -1,4 +1,5 @@
 #include "queue.h"
+#include "destruct.h"
 #include "list.h"
 #include <assert.h>
 #include <stdio.h>
@@ -9,14 +10,21 @@
 typedef struct Queue {
     LinkedList* head;
     LinkedList* tail;
+    Destructor destruct;
 } Queue;
+
+Queue* queueNewWithDestructor(Destructor destruct)
+{
+    Queue* q = calloc(1, sizeof(*q));
+    q->head = linkedListNewWithDestructor(destruct);
+    q->tail = linkedListNewWithDestructor(destruct);
+    q->destruct = destruct;
+    return q;
+}
 
 Queue* queueNew(void)
 {
-    Queue* q = calloc(1, sizeof(*q));
-    q->head = linkedListNew();
-    q->tail = linkedListNew();
-    return q;
+    return queueNewWithDestructor(NULL);
 }
 
 void queueAssertInvariant(Queue* q)
@@ -29,7 +37,7 @@ void queueSwapHeadAndTail(Queue* q)
 {
     LinkedList* reversed = linkedListReverse(q->tail);
     linkedListFree(&q->tail);
-    q->tail = linkedListNew();
+    q->tail = linkedListNewWithDestructor(q->destruct);
     linkedListFree(&q->head);
     q->head = reversed;
 }
@@ -37,13 +45,13 @@ void queueSwapHeadAndTail(Queue* q)
 void queueEnqueue(Queue* q, void* value)
 {
     queueAssertInvariant(q);
-    linkedListInsert(q->tail, linkedListCount(q->tail), value);
+    linkedListInsert(q->tail, linkedListCount(q->tail), value, false);
     if (linkedListCount(q->head) == 0)
         queueSwapHeadAndTail(q);
     queueAssertInvariant(q);
 }
 
-bool queueDequeue(Queue* q, void** value)
+bool queueDequeue(Queue* q, void** value, bool destruct)
 {
     int count = linkedListCount(q->head);
 
@@ -51,7 +59,8 @@ bool queueDequeue(Queue* q, void** value)
     bool has = linkedListGet(q->head, count - 1, value);
     if (!has)
         return false;
-    assert(linkedListRemove(q->head, count - 1));
+    bool ok = linkedListRemove(q->head, count - 1, destruct);
+    assert(ok);
     if (linkedListCount(q->head) == 0)
         queueSwapHeadAndTail(q);
     queueAssertInvariant(q);

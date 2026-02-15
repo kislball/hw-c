@@ -55,7 +55,7 @@ LinkedList* linkedListReverse(LinkedList* list)
 {
     LinkedList* result = linkedListNewWithDestructor(list->destruct);
     LinkedListIterator* it = linkedListIteratorNew(list);
-	void* value = 0;
+    void* value = 0;
 
     while (linkedListIteratorNext(it, &value)) {
         linkedListInsert(result, 0, value, false);
@@ -117,7 +117,8 @@ bool linkedListInsert(LinkedList* list, int index, void* value, bool destroyIfFa
     node->value = value;
     bool ok = linkedListInsertNode(list, index, node);
     if (!ok) {
-	if (list->destruct && destroyIfFailed) list->destruct(node->value);
+        if (list->destruct && destroyIfFailed)
+            list->destruct(node->value);
         free(node);
     }
     return ok;
@@ -159,7 +160,8 @@ bool linkedListRemove(LinkedList* list, int index, bool destroy)
         if (list->head == NULL)
             return false;
         LinkedListNode* next = list->head->next;
-	if (list->destruct && destroy) list->destruct(list->head->value);
+        if (list->destruct && destroy)
+            list->destruct(list->head->value);
         free(list->head);
         list->head = next;
         list->size--;
@@ -174,7 +176,8 @@ bool linkedListRemove(LinkedList* list, int index, bool destroy)
         return false;
     before->next = toBeRemoved->next;
     list->size--;
-if (list->destruct && destroy) list->destruct(toBeRemoved->value);
+    if (list->destruct && destroy)
+        list->destruct(toBeRemoved->value);
     free(toBeRemoved);
     return true;
 }

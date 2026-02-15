@@ -20,7 +20,7 @@ void testReverse(void)
     LinkedList* reversed = linkedListReverse(list);
     assert(linkedListCount(reversed) == linkedListCount(list) && "Lists have the same length");
 
-    int *value = 0;
+    int* value = 0;
     assert(linkedListGet(reversed, 0, (void**)&value) && *value == 4 && "List is properly reversed");
     assert(linkedListGet(reversed, 1, (void**)&value) && *value == 3 && "List is properly reversed");
     assert(linkedListGet(reversed, 2, (void**)&value) && *value == 2 && "List is properly reversed");

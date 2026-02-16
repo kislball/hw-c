@@ -53,7 +53,7 @@ static int dataCellGetMinLen(DataCell cell)
 {
     switch (cell.type) {
     case DataCellString:
-	    dieIfNot(cell.string != NULL, "String must not be NULL");
+        dieIfNot(cell.string != NULL, "String must not be NULL");
         return (int)strlen(cell.string);
     case DataCellInteger:
         return getIntegerLength(cell.integer);

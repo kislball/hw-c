@@ -1,3 +1,4 @@
+#include "die.h"
 #include "list.h"
 #include "prompt.h"
 #include "queue.h"

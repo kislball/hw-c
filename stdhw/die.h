@@ -7,3 +7,5 @@
             exit(EXIT_FAILURE);                                                                     \
         }                                                                                           \
     } while (0)
+
+#define dieIfNot(condition, text) dieIf(!(condition), text)

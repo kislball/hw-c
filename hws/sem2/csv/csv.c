@@ -115,13 +115,11 @@ bool csvFeedLine(CSVTable* table, const char* line)
     char* bufferBegin = buffer;
 
     for (const char* cur = line; cur < line + len; cur++) {
-        if (*cur == ',') {
+        if (*cur == ',' || *cur == '\n') {
             linkedListInsert(rawSegments, linkedListCount(rawSegments), buffer, false);
             buffer = calloc(len, sizeof(char));
             dieIfNot(buffer != NULL, "Failed to allocate buffer");
             bufferBegin = buffer;
-        } else if (*cur == '\n') {
-            break;
         } else {
             *bufferBegin = *cur;
             bufferBegin++;

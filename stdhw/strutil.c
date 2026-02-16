@@ -1,7 +1,9 @@
 #include "strutil.h"
+#include "die.h"
 #include "strbuild.h"
 #include "string.h"
 #include <assert.h>
+#include <stdio.h>
 #include <stdlib.h>
 
 char* padRight(char* source, size_t targetSize, char character)
@@ -13,7 +15,7 @@ char* padRight(char* source, size_t targetSize, char character)
         return strdup(source); // Чтобы гарантировать то, что возвращаемая память уникальна
 
     char* temporary = calloc(diff + 1, sizeof(char));
-    assert(temporary != NULL && "Failed to allocate temporary bytes");
+    dieIfNot(temporary != NULL, "Failed to allocate temporary bytes");
 
     memset(temporary, character, diff);
     temporary[diff] = '\0';
@@ -33,7 +35,7 @@ char* padLeft(char* source, size_t targetSize, char character)
         return strdup(source); // Чтобы гарантировать то, что возвращаемая память уникальна
 
     char* temporary = calloc(diff + 1, sizeof(char));
-    assert(temporary != NULL && "Failed to allocate temporary bytes");
+    dieIfNot(temporary != NULL, "Failed to allocate temporary bytes");
 
     memset(temporary, character, diff);
     temporary[diff] = '\0';

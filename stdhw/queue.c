@@ -1,11 +1,12 @@
 #include "queue.h"
 #include "destruct.h"
+#include "die.h"
 #include "list.h"
 #include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
 
-#define ASSERT_QUEUE_NOT_NULL(q) assert((q) != NULL && "Queue must be initialized")
+#define ASSERT_QUEUE_NOT_NULL(q) dieIfNot((q) != NULL, "Queue must be initialized")
 
 typedef struct Queue {
     LinkedList* head;
@@ -30,7 +31,7 @@ Queue* queueNew(void)
 void queueAssertInvariant(Queue* q)
 {
     if (linkedListCount(q->head) == 0)
-        assert(linkedListCount(q->tail) == 0 && "Head is only empty if the tail is empty");
+        dieIfNot(linkedListCount(q->tail) == 0, "Head is only empty if the tail is empty");
 }
 
 void queueSwapHeadAndTail(Queue* q)
@@ -60,7 +61,7 @@ bool queueDequeue(Queue* q, void** value, bool destruct)
     if (!has)
         return false;
     bool ok = linkedListRemove(q->head, count - 1, destruct);
-    assert(ok);
+    dieIfNot(ok, "unreachable, bug");
     if (linkedListCount(q->head) == 0)
         queueSwapHeadAndTail(q);
     queueAssertInvariant(q);

@@ -126,7 +126,9 @@ bool csvFeedLine(CSVTable* table, const char* line)
         }
     }
 
-    if (*buffer != '\0')
+    if (*buffer == '\0')
+        free(buffer);
+    else
         linkedListInsert(rawSegments, linkedListCount(rawSegments), buffer, false);
 
     if (table->width == 0)

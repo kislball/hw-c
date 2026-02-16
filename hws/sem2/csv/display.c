@@ -1,4 +1,5 @@
 #include "display.h"
+#include "common.h"
 #include "list.h"
 #include "string.h"
 #include <assert.h>
@@ -35,7 +36,6 @@ static struct {
     [FontBottom] = { .begin = "╚", .line = "═", .separator = "╧", .end = "╝" },
     [FontBottomBolder] = { .begin = "╚", .line = "═", .separator = "╩", .end = "╝" },
 };
-
 
 static int getIntegerLength(int number)
 {
@@ -231,4 +231,3 @@ char* dataCellRenderTable(LinkedList* cells, int width, int height)
 
     return res;
 }
-

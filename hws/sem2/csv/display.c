@@ -51,9 +51,9 @@ static int getIntegerLength(int number)
 
 static int dataCellGetMinLen(DataCell cell)
 {
-    assert(cell.string != NULL);
     switch (cell.type) {
     case DataCellString:
+	    dieIfNot(cell.string != NULL, "String must not be NULL");
         return (int)strlen(cell.string);
     case DataCellInteger:
         return getIntegerLength(cell.integer);
@@ -86,14 +86,14 @@ static char* dataCellPrint(DataCell cell)
         return strdup(cell.string);
     case DataCellInteger: {
         char* buffer = calloc(32, sizeof(char));
-        assert(buffer != NULL && "Failed to allocate buffer for printing data cell");
+        dieIfNot(buffer != NULL, "Failed to allocate buffer for printing data cell");
         snprintf(buffer, 32, "%d", cell.integer);
 
         return buffer;
     }
     case DataCellFloating: {
         char* buffer = calloc(32, sizeof(char));
-        assert(buffer != NULL && "Failed to allocate buffer for printing data cell");
+        dieIfNot(buffer != NULL, "Failed to allocate buffer for printing data cell");
         snprintf(buffer, 32, "%.6f", cell.floating);
 
         int len = dataCellGetMinLen(cell);
@@ -182,7 +182,7 @@ static char* dataCellRenderRow(RowType type, LinkedList* cells, LinkedList* colS
 char* dataCellRenderTable(LinkedList* cells, int width, int height)
 {
     if (linkedListCount(cells) != width * height) {
-        assert(false && "Incorrect input data");
+        dieIfNot(false, "Incorrect input data");
         return NULL;
     }
     LinkedList* colSizes = linkedListNewWithDestructor(free);
@@ -195,7 +195,7 @@ char* dataCellRenderTable(LinkedList* cells, int width, int height)
         for (int j = 0; j < height; j++) {
             DataCell* cell = NULL;
             bool ok = linkedListGet(cells, GET_XY(i, j), (void**)&cell);
-            assert(ok);
+            dieIfNot(ok, "unreachable, bug");
             int w = dataCellGetMinLen(*cell);
             if (w > *widest)
                 *widest = w;
@@ -208,7 +208,7 @@ char* dataCellRenderTable(LinkedList* cells, int width, int height)
         for (int i = 0; i < width; i++) {
             DataCell* cell = NULL;
             bool ok = linkedListGet(cells, GET_XY(i, j), (void**)&cell);
-            assert(ok);
+            dieIfNot(ok, "unreachable, bug");
             linkedListInsert(row, linkedListCount(row), cell, true);
         }
 

@@ -6,7 +6,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define ASSERT_BUILDER_NOT_NULL(builder) dieIfNot((( builder ) != NULL), "Builder must not be NULL")
+#define ASSERT_BUILDER_NOT_NULL(builder) dieIfNot(((builder) != NULL), "Builder must not be NULL")
 
 typedef struct StringBuilder {
     char* buffer;

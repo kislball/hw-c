@@ -1,5 +1,6 @@
 #pragma once
 
+// Преждевременно завершает работу программу, если condition == true
 #define dieIf(condition, text)                                                                      \
     do {                                                                                            \
         if (condition) {                                                                            \
@@ -8,4 +9,5 @@
         }                                                                                           \
     } while (0)
 
+// Преждевременно завершает работу программу, если condition == false
 #define dieIfNot(condition, text) dieIf(!(condition), text)

@@ -4,7 +4,7 @@
 
 // tidy жалуется на то, что размер может быть заманипулирован scanf-ом,
 // но в данном случае это, полагаю, не критично.
-//NOLINTBEGIN clang-analyzer-optin.taint.TaintedAlloc
+// NOLINTBEGIN clang-analyzer-optin.taint.TaintedAlloc
 int* promptIntArray(char* promptString, int* len)
 {
     printf("%s", promptString);
@@ -48,4 +48,4 @@ char* promptString(char* promptString)
 
     return buffer;
 }
-//NOLINTEND
+// NOLINTEND

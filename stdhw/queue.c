@@ -6,7 +6,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define ASSERT_QUEUE_NOT_NULL(q) dieIfNot((q) != NULL, "Queue must be initialized")
+#define ASSERT_QUEUE_NOT_NULL(q) dieIfNot((q) != nullptr, "Queue must be initialized")
 
 typedef struct Queue {
     LinkedList* head;
@@ -25,7 +25,7 @@ Queue* queueNewWithDestructor(Destructor destruct)
 
 Queue* queueNew(void)
 {
-    return queueNewWithDestructor(NULL);
+    return queueNewWithDestructor(nullptr);
 }
 
 void queueAssertInvariant(Queue* q)
@@ -75,5 +75,5 @@ void queueFree(Queue** q)
     linkedListFree(&(*q)->head);
     linkedListFree(&(*q)->tail);
     free(*q);
-    *q = NULL;
+    *q = nullptr;
 }

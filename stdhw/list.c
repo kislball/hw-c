@@ -5,10 +5,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define ASSERT_LIST_NOT_NULL(list) dieIfNot((list) != NULL, "List must have been initialized")
-#define ASSERT_ITERATOR_NOT_NULL(iterator) dieIfNot((iterator) != NULL, "Iterator must have been initialized")
+#define ASSERT_LIST_NOT_NULL(list) dieIfNot((list) != nullptr, "List must have been initialized")
+#define ASSERT_ITERATOR_NOT_NULL(iterator) dieIfNot((iterator) != nullptr, "Iterator must have been initialized")
 // now internal
-#define LINKED_LIST_FOREACH(list, node) for (LinkedListNode * (node) = (list)->head; (node) != NULL; (node) = (node)->next)
+#define LINKED_LIST_FOREACH(list, node) for (LinkedListNode * (node) = (list)->head; (node) != nullptr; (node) = (node)->next)
 
 // Элемент связного списка
 typedef struct LinkedListNode {
@@ -38,7 +38,7 @@ LinkedListIterator* linkedListIteratorNew(LinkedList* list)
 bool linkedListIteratorNext(LinkedListIterator* iterator, void** value)
 {
     ASSERT_ITERATOR_NOT_NULL(iterator);
-    if (iterator->current == NULL)
+    if (iterator->current == nullptr)
         return false;
     *value = iterator->current->value;
     iterator->current = iterator->current->next;
@@ -49,14 +49,14 @@ void linkedListIteratorFree(LinkedListIterator** iterator)
 {
     ASSERT_ITERATOR_NOT_NULL(*iterator);
     free(*iterator);
-    *iterator = NULL;
+    *iterator = nullptr;
 }
 
 LinkedList* linkedListReverse(LinkedList* list)
 {
     LinkedList* result = linkedListNewWithDestructor(list->destruct);
     LinkedListIterator* it = linkedListIteratorNew(list);
-    void* value = 0;
+    void* value = nullptr;
 
     while (linkedListIteratorNext(it, &value)) {
         linkedListInsert(result, 0, value, false);
@@ -69,14 +69,14 @@ LinkedList* linkedListReverse(LinkedList* list)
 LinkedList* linkedListNewWithDestructor(Destructor destruct)
 {
     LinkedList* list = calloc(1, sizeof(*list));
-    list->head = NULL;
+    list->head = nullptr;
     list->destruct = destruct;
     return list;
 }
 
 LinkedList* linkedListNew(void)
 {
-    return linkedListNewWithDestructor(NULL);
+    return linkedListNewWithDestructor(nullptr);
 }
 
 void linkedListFree(LinkedList** list)
@@ -84,7 +84,7 @@ void linkedListFree(LinkedList** list)
     ASSERT_LIST_NOT_NULL(*list);
     linkedListDelete(*list);
     free(*list);
-    *list = NULL;
+    *list = nullptr;
 }
 
 bool linkedListInsertNode(LinkedList* list, int index, LinkedListNode* node)
@@ -100,7 +100,7 @@ bool linkedListInsertNode(LinkedList* list, int index, LinkedListNode* node)
     }
 
     LinkedListNode* ptr = linkedListGetPointer(list, index - 1);
-    if (ptr == NULL)
+    if (ptr == nullptr)
         return false;
 
     node->next = ptr->next;
@@ -129,9 +129,9 @@ LinkedListNode* linkedListGetPointer(LinkedList* list, int index)
 {
     ASSERT_LIST_NOT_NULL(list);
     if (index < 0)
-        return NULL;
+        return nullptr;
     LinkedListNode* ptr = list->head;
-    for (int i = 0; i < index && ptr != NULL; i++) {
+    for (int i = 0; i < index && ptr != nullptr; i++) {
         ptr = ptr->next;
     }
     return ptr;
@@ -143,10 +143,10 @@ bool linkedListGet(LinkedList* list, int index, void** value)
     if (index < 0)
         return false;
     LinkedListNode* ptr = linkedListGetPointer(list, index);
-    if (ptr == NULL)
+    if (ptr == nullptr)
         return false;
     else {
-        if (value != NULL)
+        if (value != nullptr)
             *value = ptr->value;
         return true;
     }
@@ -158,7 +158,7 @@ bool linkedListRemove(LinkedList* list, int index, bool destroy)
     if (index < 0)
         return false;
     if (index == 0) {
-        if (list->head == NULL)
+        if (list->head == nullptr)
             return false;
         LinkedListNode* next = list->head->next;
         if (list->destruct && destroy)
@@ -170,10 +170,10 @@ bool linkedListRemove(LinkedList* list, int index, bool destroy)
     }
 
     LinkedListNode* before = linkedListGetPointer(list, index - 1);
-    if (before == NULL)
+    if (before == nullptr)
         return false;
     LinkedListNode* toBeRemoved = before->next;
-    if (toBeRemoved == NULL)
+    if (toBeRemoved == nullptr)
         return false;
     before->next = toBeRemoved->next;
     list->size--;
@@ -188,16 +188,16 @@ void linkedListAppend(LinkedList* to, LinkedList* from)
     ASSERT_LIST_NOT_NULL(to);
     ASSERT_LIST_NOT_NULL(from);
     to->size += from->size;
-    if (to->head == NULL) {
+    if (to->head == nullptr) {
         to->head = from->head;
-        from->head = NULL;
+        from->head = nullptr;
         return;
     }
     LinkedListNode* last = to->head;
-    while (last->next != NULL)
+    while (last->next != nullptr)
         last = last->next;
     last->next = from->head;
-    from->head = NULL;
+    from->head = nullptr;
 }
 
 int linkedListCount(LinkedList* list)

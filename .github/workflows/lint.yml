@@ -7,11 +7,17 @@ on:
 jobs:
   build-and-lint:
     runs-on: ubuntu-latest
+    container:
+      image: fedora:latest
     steps:
       - uses: actions/checkout@v5
+      - name: Install LLVM and CMake
+        run: |
+           dnf copr enable -y @fedora-llvm-team/llvm-snapshots
+           dnf install -y llvm clang clang-tools-extra cmake
       - name: Check format
         run: |
-          find . -path ./build -prune -o -type f -name '*.[c|h]' -print | xargs clang-format-18 --style=file --dry-run -Werror
+          find . -path ./build -prune -o -type f -name '*.[c|h]' -print | xargs clang-format --style=file --dry-run -Werror
       - name: Configure
         run: |
           # -DCMAKE_EXPORT_COMPILE_COMMANDS=ON is important for clang-tidy
@@ -21,4 +27,4 @@ jobs:
           cmake --build build
       - name: Lint
         run: |
-          run-clang-tidy-18 -p=build
+          run-clang-tidy -p=build

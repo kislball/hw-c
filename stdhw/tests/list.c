@@ -20,7 +20,7 @@ void testReverse(void)
     LinkedList* reversed = linkedListReverse(list);
     assert(linkedListCount(reversed) == linkedListCount(list) && "Lists have the same length");
 
-    int* value = 0;
+    int* value = nullptr;
     assert(linkedListGet(reversed, 0, (void**)&value) && *value == 4 && "List is properly reversed");
     assert(linkedListGet(reversed, 1, (void**)&value) && *value == 3 && "List is properly reversed");
     assert(linkedListGet(reversed, 2, (void**)&value) && *value == 2 && "List is properly reversed");
@@ -28,7 +28,7 @@ void testReverse(void)
 
     linkedListFree(&list);
     linkedListFree(&reversed);
-    assert(list == NULL && reversed == NULL && "Pointers are NULL after free");
+    assert(list == nullptr && reversed == nullptr && "Pointers are NULL after free");
 }
 
 int main(void)
@@ -44,7 +44,7 @@ int main(void)
     linkedListInsert(list, 2, &c, false);
     assert(linkedListCount(list) == 3 && "Elements are correctly counted");
 
-    void* v = 0;
+    void* v = nullptr;
     bool res = linkedListGet(list, 0, &v);
     assert(res && "Insert on zero index is successful");
     assert(*(int*)v == 20 && "Elements are inserted in correct order");
@@ -69,7 +69,7 @@ int main(void)
 
     LinkedListIterator* it = linkedListIteratorNew(list);
     int count = 0;
-    for (int* i = 0; linkedListIteratorNext(it, (void**)&i);) {
+    for (int* i = nullptr; linkedListIteratorNext(it, (void**)&i);) {
         printf("%d\n", *i);
         count++;
     }

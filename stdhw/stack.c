@@ -5,19 +5,19 @@
 
 Stack stackNewWithDestructor(Destructor destruct)
 {
-    Stack st = { .head = NULL, .size = 0, .destruct = destruct };
+    Stack st = { .head = nullptr, .size = 0, .destruct = destruct };
     return st;
 }
 
 Stack stackNew(void)
 {
-    return stackNewWithDestructor(NULL);
+    return stackNewWithDestructor(nullptr);
 }
 
 bool stackPush(Stack* stack, void* value)
 {
     StackNode* node = malloc(sizeof(StackNode));
-    if (node == NULL) {
+    if (node == nullptr) {
         return false;
     }
 
@@ -31,9 +31,9 @@ bool stackPush(Stack* stack, void* value)
 
 void* stackPeek(Stack* stack, bool* isSuccessful)
 {
-    if (stack->head == NULL) {
+    if (stack->head == nullptr) {
         *isSuccessful = false;
-        return 0;
+        return nullptr;
     } else {
         *isSuccessful = true;
         return stack->head->value;
@@ -44,7 +44,7 @@ void* stackPop(Stack* stack, bool* isSuccessful)
 {
     void* val = stackPeek(stack, isSuccessful);
     if (!*isSuccessful) {
-        return 0;
+        return nullptr;
     }
 
     StackNode* head = stack->head;
@@ -62,6 +62,6 @@ void stackDelete(Stack* stack)
     while (has) {
         stackPop(stack, &has);
     }
-    stack->head = NULL;
+    stack->head = nullptr;
     stack->size = 0;
 }

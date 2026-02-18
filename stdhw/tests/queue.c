@@ -16,7 +16,7 @@ int main(void)
     queueEnqueue(q, &b);
     queueEnqueue(q, &c);
 
-    void* value = 0;
+    void* value = nullptr;
     assert(queueDequeue(q, &value, false) && *(int*)value == 1 && "Queue outputs elements in correct order");
     assert(queueDequeue(q, &value, false) && *(int*)value == 2 && "Queue outputs elements in correct order");
     queueEnqueue(q, &d);
@@ -25,6 +25,6 @@ int main(void)
     assert(!queueDequeue(q, &value, false) && "Queue is empty");
 
     queueFree(&q);
-    assert(q == NULL && "Pointer must have been deinitialized");
+    assert(q == nullptr && "Pointer must have been deinitialized");
     return 0;
 }

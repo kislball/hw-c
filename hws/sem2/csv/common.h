@@ -1,3 +1,4 @@
+// Ячейка в CSV таблице
 typedef struct {
     enum {
         DataCellInteger,
@@ -11,4 +12,5 @@ typedef struct {
     };
 } DataCell;
 
+// Форматирование CSV таблицы используя псевдографику
 char* prettyCsv(char*);

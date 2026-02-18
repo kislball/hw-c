@@ -24,18 +24,20 @@ typedef enum {
     FontBottomBolder = 4,
 } DataCellLineFontType;
 
-static struct {
+const static struct {
     char* begin;
     char* line;
     char* separator;
     char* end;
-} dataCellLineFonts[] = {
+} DATA_CELL_LINE_FONTS[] = {
     [FontTop] = { .begin = "╔", .line = "═", .separator = "╦", .end = "╗" },
     [FontInner] = { .begin = "╠", .line = "─", .separator = "┼", .end = "╣" },
     [FontInnerBold] = { .begin = "╠", .line = "═", .separator = "╬", .end = "╣" },
     [FontBottom] = { .begin = "╚", .line = "═", .separator = "╧", .end = "╝" },
     [FontBottomBolder] = { .begin = "╚", .line = "═", .separator = "╩", .end = "╝" },
 };
+
+const static char* emptyTable = "╔╗\n╚╝";
 
 static int getIntegerLength(int number)
 {
@@ -107,7 +109,7 @@ static char* dataCellPrint(DataCell cell)
 static void dataCellDrawLine(DataCellLineFontType font, StringBuilder* row, LinkedList* cells, LinkedList* colSizes)
 {
     int totalColumns = linkedListCount(cells);
-    stringBuilderAppend(row, dataCellLineFonts[font].begin);
+    stringBuilderAppend(row, DATA_CELL_LINE_FONTS[font].begin);
 
     for (int i = 0; i < totalColumns; i++) {
         int sizeIdx = i % linkedListCount(colSizes);
@@ -115,9 +117,9 @@ static void dataCellDrawLine(DataCellLineFontType font, StringBuilder* row, Link
         linkedListGet(colSizes, sizeIdx, (void**)&size);
 
         for (int j = 0; j < (*size) + 2; j++) {
-            stringBuilderAppend(row, dataCellLineFonts[font].line);
+            stringBuilderAppend(row, DATA_CELL_LINE_FONTS[font].line);
         }
-        stringBuilderAppend(row, i == totalColumns - 1 ? dataCellLineFonts[font].end : dataCellLineFonts[font].separator);
+        stringBuilderAppend(row, i == totalColumns - 1 ? DATA_CELL_LINE_FONTS[font].end : DATA_CELL_LINE_FONTS[font].separator);
     }
     stringBuilderAppend(row, "\n");
 }
@@ -181,6 +183,9 @@ static char* dataCellRenderRow(RowType type, LinkedList* cells, LinkedList* colS
 
 char* dataCellRenderTable(LinkedList* cells, int width, int height)
 {
+    if (width == 0 || height == 0) {
+        return strdup(emptyTable);
+    }
     if (linkedListCount(cells) != width * height) {
         dieIfNot(false, "Incorrect input data");
         return NULL;

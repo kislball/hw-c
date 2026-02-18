@@ -6,7 +6,9 @@ on:
 
 jobs:
   tests:
-    runs-on: fedora-latest
+    runs-on: ubuntu-latest
+    container:
+      image: fedora-latest
     steps:
       - uses: actions/checkout@v5
       - name: Install LLVM

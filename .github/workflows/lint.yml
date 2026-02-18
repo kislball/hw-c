@@ -11,9 +11,45 @@ jobs:
       image: gcc:15
     steps:
       - uses: actions/checkout@v5
+      - name: Install latest Clang tools
+        run: |
+          apt-get update
+          
+          apt-get install -y --no-install-recommends \
+            wget \
+            gnupg \
+            software-properties-common \
+            lsb-release \
+            python3 \
+            python3-pip \
+            cmake \
+            make
+          
+          wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | apt-key add -
+          
+          add-apt-repository "deb https://apt.llvm.org/$(lsb_release -cs)/ llvm-toolchain-$(lsb_release -cs)-21 main"
+          
+          apt-get update
+          apt-get install -y --no-install-recommends \
+            clang-format-21 \
+            clang-tidy-21 \
+            clang-21 \
+            llvm-21 \
+            llvm-21-tools  
+          
+          update-alternatives --install /usr/bin/clang-format clang-format /usr/bin/clang-format-21 100
+          update-alternatives --install /usr/bin/clang-tidy clang-tidy /usr/bin/clang-tidy-21 100
+          
+          RUN_CLANG_TIDY=$(find /usr -name "run-clang-tidy*" -type f 2>/dev/null | head -1)
+          if [ -n "$RUN_CLANG_TIDY" ]; then
+            ln -sf "$RUN_CLANG_TIDY" /usr/local/bin/run-clang-tidy
+          else
+            pip3 install --upgrade pip
+            pip3 install run-clang-tidy
+          fi 
       - name: Check format
         run: |
-          find . -path ./build -prune -o -type f -name '*.[c|h]' -print | xargs clang-format-18 --style=file --dry-run -Werror
+          find . -path ./build -prune -o -type f -name '*.[c|h]' -print | xargs clang-format --style=file --dry-run -Werror
       - name: Configure
         run: |
           # -DCMAKE_EXPORT_COMPILE_COMMANDS=ON is important for clang-tidy
@@ -23,4 +59,4 @@ jobs:
           cmake --build build
       - name: Lint
         run: |
-          run-clang-tidy-18 -p=build
+          run-clang-tidy -p=build

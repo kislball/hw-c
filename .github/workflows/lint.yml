@@ -8,7 +8,7 @@ jobs:
   build-and-lint:
     runs-on: ubuntu-latest
     container:
-      image: fedora-latest
+      image: fedora:latest
     steps:
       - uses: actions/checkout@v5
       - name: Install LLVM and CMake

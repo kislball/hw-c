@@ -15,7 +15,7 @@ char* padRight(char* source, size_t targetSize, char character)
         return strdup(source); // Чтобы гарантировать то, что возвращаемая память уникальна
 
     char* temporary = calloc(diff + 1, sizeof(char));
-    dieIfNot(temporary != NULL, "Failed to allocate temporary bytes");
+    dieIfNot(temporary != nullptr, "Failed to allocate temporary bytes");
 
     memset(temporary, character, diff);
     temporary[diff] = '\0';
@@ -35,7 +35,7 @@ char* padLeft(char* source, size_t targetSize, char character)
         return strdup(source); // Чтобы гарантировать то, что возвращаемая память уникальна
 
     char* temporary = calloc(diff + 1, sizeof(char));
-    dieIfNot(temporary != NULL, "Failed to allocate temporary bytes");
+    dieIfNot(temporary != nullptr, "Failed to allocate temporary bytes");
 
     memset(temporary, character, diff);
     temporary[diff] = '\0';

@@ -34,7 +34,7 @@ void padding(void)
 void builder(void)
 {
     StringBuilder* builder = stringBuilderNew();
-    assert(builder != NULL && "A new string builder has been initialized");
+    assert(builder != nullptr && "A new string builder has been initialized");
 
     char* s1 = stringBuild(builder);
     assert(!strcmp(s1, "") && "String builder emits an empty string by default");
@@ -53,7 +53,7 @@ void builder(void)
     free(s3);
 
     stringBuilderFree(&builder);
-    assert(builder == NULL && "The string builder has been freed");
+    assert(builder == nullptr && "The string builder has been freed");
 }
 
 int main(void)

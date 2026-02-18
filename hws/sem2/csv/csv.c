@@ -8,7 +8,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define ASSERT_TABLE_NOT_NULL(table) dieIfNot((table) != NULL, "Table must not be null");
+#define ASSERT_TABLE_NOT_NULL(table) dieIfNot((table) != nullptr, "Table must not be null");
 
 typedef struct CSVTable {
     LinkedList* cells;
@@ -30,9 +30,9 @@ LinkedList* csvGetCellsView(CSVTable* table)
     LinkedList* cells = linkedListNewWithDestructor(csvFreeDataCell);
     LinkedListIterator* it = linkedListIteratorNew(table->cells);
 
-    for (DataCell* cell = NULL; linkedListIteratorNext(it, (void**)&cell);) {
+    for (DataCell* cell = nullptr; linkedListIteratorNext(it, (void**)&cell);) {
         DataCell* newCell = calloc(1, sizeof(*newCell));
-        dieIfNot(newCell != NULL, "Failed to allocate buffer");
+        dieIfNot(newCell != nullptr, "Failed to allocate buffer");
         *newCell = *cell;
         if (newCell->type == DataCellString)
             newCell->string = strdup(newCell->string);
@@ -62,7 +62,7 @@ LinkedList* csvGetCells(CSVTable* table)
 CSVTable* csvNew(void)
 {
     CSVTable* table = calloc(1, sizeof(*table));
-    dieIfNot(table != NULL, "Failed to allocate memory for a CSV table");
+    dieIfNot(table != nullptr, "Failed to allocate memory for a CSV table");
     LinkedList* cells = linkedListNewWithDestructor(csvFreeDataCell);
     table->cells = cells;
     table->width = 0;
@@ -77,13 +77,13 @@ void csvFree(CSVTable** table)
     ASSERT_TABLE_NOT_NULL(*table);
     linkedListFree(&(*table)->cells);
     free(*table);
-    *table = NULL;
+    *table = nullptr;
 }
 
 DataCell csvSegmentIntoCell(char* segment)
 {
     bool isNumeric = *segment == '-' || isdigit(*segment);
-    bool hasDot = strchr(segment, '.') != NULL;
+    bool hasDot = strchr(segment, '.') != nullptr;
     for (char* cur = segment; *cur != '\0' && isNumeric; cur++) {
         if (!isdigit(*cur) && *cur != '.' && *cur != '-')
             isNumeric = false;
@@ -107,18 +107,18 @@ DataCell csvSegmentIntoCell(char* segment)
 
 bool csvFeedLine(CSVTable* table, const char* line)
 {
-    LinkedList* rawSegments = linkedListNewWithDestructor(NULL);
+    LinkedList* rawSegments = linkedListNewWithDestructor(nullptr);
     size_t len = strlen(line);
 
     char* buffer = calloc(len, sizeof(char));
-    dieIfNot(buffer != NULL, "Failed to allocate buffer");
+    dieIfNot(buffer != nullptr, "Failed to allocate buffer");
     char* bufferBegin = buffer;
 
     for (const char* cur = line; cur < line + len; cur++) {
         if (*cur == ',' || *cur == '\n') {
             linkedListInsert(rawSegments, linkedListCount(rawSegments), buffer, false);
             buffer = calloc(len, sizeof(char));
-            dieIfNot(buffer != NULL, "Failed to allocate buffer");
+            dieIfNot(buffer != nullptr, "Failed to allocate buffer");
             bufferBegin = buffer;
         } else {
             *bufferBegin = *cur;
@@ -141,9 +141,9 @@ bool csvFeedLine(CSVTable* table, const char* line)
 
     LinkedListIterator* it = linkedListIteratorNew(rawSegments);
 
-    for (char* segment = NULL; linkedListIteratorNext(it, (void**)&segment);) {
+    for (char* segment = nullptr; linkedListIteratorNext(it, (void**)&segment);) {
         DataCell* cell = calloc(1, sizeof(*cell));
-        dieIfNot(cell != NULL, "Failed to allocate cell");
+        dieIfNot(cell != nullptr, "Failed to allocate cell");
         *cell = csvSegmentIntoCell(segment);
         linkedListInsert(table->cells, linkedListCount(table->cells), cell, false);
     }

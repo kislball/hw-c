@@ -6,7 +6,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define ASSERT_BUILDER_NOT_NULL(builder) dieIfNot(((builder) != NULL), "Builder must not be NULL")
+#define ASSERT_BUILDER_NOT_NULL(builder) dieIfNot(((builder) != nullptr), "Builder must not be NULL")
 
 typedef struct StringBuilder {
     char* buffer;
@@ -17,12 +17,12 @@ typedef struct StringBuilder {
 StringBuilder* stringBuilderNew(void)
 {
     StringBuilder* builder = calloc(1, sizeof(*builder));
-    dieIfNot(builder != NULL, "Failed to allocate string builder");
+    dieIfNot(builder != nullptr, "Failed to allocate string builder");
 
     builder->size = 0;
     builder->capacity = 16;
     builder->buffer = calloc(builder->capacity, sizeof(char));
-    if (builder->buffer == NULL) {
+    if (builder->buffer == nullptr) {
         free(builder);
         dieIf(true, "Failed to allocate string buffer");
     }
@@ -36,7 +36,7 @@ void stringBuilderFree(StringBuilder** builder)
     ASSERT_BUILDER_NOT_NULL(*builder);
     free((**builder).buffer);
     free(*builder);
-    *builder = NULL;
+    *builder = nullptr;
 }
 
 char* stringBuild(StringBuilder* builder)
@@ -50,7 +50,7 @@ static void stringBuilderExtend(StringBuilder* bldr)
     ASSERT_BUILDER_NOT_NULL(bldr);
     bldr->capacity *= 2;
     void* newAddr = realloc(bldr->buffer, bldr->capacity);
-    dieIfNot(newAddr != NULL, "Failed to allocate more memory for string builder");
+    dieIfNot(newAddr != nullptr, "Failed to allocate more memory for string builder");
     bldr->buffer = newAddr;
 }
 

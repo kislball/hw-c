@@ -15,10 +15,10 @@ int main(int argc, char** argv)
         inputName = argv[1];
     if (argc >= 3)
         outputName = argv[2];
-    assert(inputName != NULL && outputName != NULL);
+    assert(inputName != nullptr && outputName != nullptr);
 
     FILE* fptr = fopen(inputName, "r");
-    if (fptr == NULL) {
+    if (fptr == nullptr) {
         fprintf(stderr, "%s: failed to open %s: %s\n", argv[0], inputName, strerror(errno));
         return 1;
     }
@@ -31,7 +31,7 @@ int main(int argc, char** argv)
         csvHeight(table));
 
     FILE* out = fopen(outputName, "w");
-    if (out == NULL) {
+    if (out == nullptr) {
         fprintf(stderr, "%s: failed to open %s: %s\n", argv[0], outputName, strerror(errno));
         free(result);
         csvFree(&table);

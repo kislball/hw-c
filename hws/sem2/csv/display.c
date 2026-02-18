@@ -55,14 +55,14 @@ static int dataCellGetMinLen(DataCell cell)
 {
     switch (cell.type) {
     case DataCellString:
-        dieIfNot(cell.string != NULL, "String must not be NULL");
+        dieIfNot(cell.string != nullptr, "String must not be NULL");
         return (int)strlen(cell.string);
     case DataCellInteger:
         return getIntegerLength(cell.integer);
     case DataCellFloating: {
         char buffer[64];
         snprintf(buffer, sizeof(buffer), "%.6f", cell.floating);
-        bool hasDot = strchr(buffer, '.') != NULL;
+        bool hasDot = strchr(buffer, '.') != nullptr;
         int bufLen = (int)strlen(buffer);
 
         int trailingZeroes = 0;
@@ -88,14 +88,14 @@ static char* dataCellPrint(DataCell cell)
         return strdup(cell.string);
     case DataCellInteger: {
         char* buffer = calloc(32, sizeof(char));
-        dieIfNot(buffer != NULL, "Failed to allocate buffer for printing data cell");
+        dieIfNot(buffer != nullptr, "Failed to allocate buffer for printing data cell");
         snprintf(buffer, 32, "%d", cell.integer);
 
         return buffer;
     }
     case DataCellFloating: {
         char* buffer = calloc(32, sizeof(char));
-        dieIfNot(buffer != NULL, "Failed to allocate buffer for printing data cell");
+        dieIfNot(buffer != nullptr, "Failed to allocate buffer for printing data cell");
         snprintf(buffer, 32, "%.6f", cell.floating);
 
         int len = dataCellGetMinLen(cell);
@@ -136,7 +136,7 @@ static char* dataCellRenderRow(RowType type, LinkedList* cells, LinkedList* colS
     stringBuilderAppend(row, "║");
     LinkedListIterator* it = linkedListIteratorNew(cells);
     int i = 0;
-    for (DataCell* cell = NULL; linkedListIteratorNext(it, (void**)&cell);) {
+    for (DataCell* cell = nullptr; linkedListIteratorNext(it, (void**)&cell);) {
         char* (*padder)(char*, size_t, char) = cell->type == DataCellString ? &padRight : &padLeft;
 
         int sizeIdx = i % linkedListCount(colSizes);
@@ -188,7 +188,7 @@ char* dataCellRenderTable(LinkedList* cells, int width, int height)
     }
     if (linkedListCount(cells) != width * height) {
         dieIfNot(false, "Incorrect input data");
-        return NULL;
+        return nullptr;
     }
     LinkedList* colSizes = linkedListNewWithDestructor(free);
     StringBuilder* builder = stringBuilderNew();
@@ -198,7 +198,7 @@ char* dataCellRenderTable(LinkedList* cells, int width, int height)
     for (int i = 0; i < width; i++) {
         int* widest = calloc(1, sizeof(int));
         for (int j = 0; j < height; j++) {
-            DataCell* cell = NULL;
+            DataCell* cell = nullptr;
             bool ok = linkedListGet(cells, GET_XY(i, j), (void**)&cell);
             dieIfNot(ok, "unreachable, bug");
             int w = dataCellGetMinLen(*cell);
@@ -211,7 +211,7 @@ char* dataCellRenderTable(LinkedList* cells, int width, int height)
     for (int j = 0; j < height; j++) {
         LinkedList* row = linkedListNew();
         for (int i = 0; i < width; i++) {
-            DataCell* cell = NULL;
+            DataCell* cell = nullptr;
             bool ok = linkedListGet(cells, GET_XY(i, j), (void**)&cell);
             dieIfNot(ok, "unreachable, bug");
             linkedListInsert(row, linkedListCount(row), cell, true);

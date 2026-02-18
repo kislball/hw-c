@@ -6,18 +6,19 @@
 
 char* prettyCsv(char* data)
 {
-	CSVTable* table = csvNew();
-	data = strdup(data);
-	char* result = NULL;
+    CSVTable* table = csvNew();
+    data = strdup(data);
+    char* result = NULL;
 
-	for (char* segment = strtok(data, "\n"); segment; segment = strtok(NULL, "\n")) {
-		bool ok = csvFeedLine(table, segment);
-		if (!ok) goto final;
-	}
-	result = dataCellRenderTable(csvGetCellsView(table), csvWidth(table), csvHeight(table));
+    for (char* segment = strtok(data, "\n"); segment; segment = strtok(NULL, "\n")) {
+        bool ok = csvFeedLine(table, segment);
+        if (!ok)
+            goto final;
+    }
+    result = dataCellRenderTable(csvGetCellsView(table), csvWidth(table), csvHeight(table));
 
 final:
-	free(data);
-	csvFree(&table);
-	return result;
+    free(data);
+    csvFree(&table);
+    return result;
 }

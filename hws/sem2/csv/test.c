@@ -17,7 +17,7 @@ void assertTestCase(TestCase tCase)
     free(out);
 }
 
-//NOLINTBEGIN cppcoreguidelines-narrowing-conversions
+// NOLINTBEGIN cppcoreguidelines-narrowing-conversions
 const char BIG_INPUT[] = {
 #embed "./tests/big.csv" if_empty('X', '\n')
     , '\0'
@@ -57,19 +57,19 @@ const char ONE_ROW_OUTPUT[] = {
 #embed "./tests/oneRow.txt" if_empty('X', '\n')
     , '\0'
 };
-//NOLINTEND
+// NOLINTEND
 
 const TestCase TEST_CASES[] = {
-	{ .input = (char*)BIG_INPUT, .expected = (char*)BIG_OUTPUT },
-	{ .input = (char*)ISLAND_INPUT, .expected = (char*)ISLAND_OUTPUT },
-	{ .input = (char*)ONE_ROW_INPUT, .expected = (char*)ONE_ROW_OUTPUT },
-	{ .input = (char*)ONE_COLUMN_INPUT, .expected = (char*)ONE_COLUMN_OUTPUT },
+    { .input = (char*)BIG_INPUT, .expected = (char*)BIG_OUTPUT },
+    { .input = (char*)ISLAND_INPUT, .expected = (char*)ISLAND_OUTPUT },
+    { .input = (char*)ONE_ROW_INPUT, .expected = (char*)ONE_ROW_OUTPUT },
+    { .input = (char*)ONE_COLUMN_INPUT, .expected = (char*)ONE_COLUMN_OUTPUT },
 };
 
 int main(void)
 {
-	int totalTestCases = sizeof(TEST_CASES) / sizeof(TestCase);
-	for (int i = 0; i < totalTestCases; i++) {
-		assertTestCase(TEST_CASES[i]);
-	}
+    int totalTestCases = sizeof(TEST_CASES) / sizeof(TestCase);
+    for (int i = 0; i < totalTestCases; i++) {
+        assertTestCase(TEST_CASES[i]);
+    }
 }

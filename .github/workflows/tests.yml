@@ -6,11 +6,13 @@ on:
 
 jobs:
   tests:
-    runs-on: ubuntu-latest
-    container:
-      image: gcc:15
+    runs-on: fedora-latest
     steps:
       - uses: actions/checkout@v5
+      - name: Install LLVM
+        run: |
+           dnf copr enable -y @fedora-llvm-team/llvm-snapshots
+           dnf install llvm clang clang-tools-extra cmake
       - name: Configure
         run: |
           # -DCMAKE_EXPORT_COMPILE_COMMANDS=ON is important for clang-tidy

@@ -10,3 +10,5 @@ typedef struct {
         char* string;
     };
 } DataCell;
+
+char* prettyCsv(char*);

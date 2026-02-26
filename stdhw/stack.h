@@ -22,7 +22,7 @@ Stack stackNewWithDestructor(Destructor);
 // Освобождает память, занимаемую стеком.
 void stackDelete(Stack* stack);
 // Добавляет элемент на вершину стека. Возвращает false в случае ошибки, true - в ином случае.
-bool stackPush(Stack* stack, void* vlaue);
+bool stackPush(Stack* stack, void* value);
 // Возвращает элемент с вершины стека, а затем убирает его. По указателю во втором аргументе устанавливается значение
 // true если в стеке есть элемент на вершине, в ином случае false.
 void* stackPop(Stack* stack, bool* isSuccessful);

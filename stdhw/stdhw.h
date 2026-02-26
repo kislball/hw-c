@@ -3,3 +3,5 @@
 #include "prompt.h"
 #include "queue.h"
 #include "stack.h"
+#include "strbuild.h"
+#include "strutil.h"

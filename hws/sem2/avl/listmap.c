@@ -97,3 +97,16 @@ void mapFree(Map** m)
     free(*m);
     *m = nullptr;
 }
+
+LinkedList* mapGetKeys(Map* m)
+{
+    LinkedList* list = linkedListNewWithDestructor(free);
+    LinkedListIterator* it = linkedListIteratorNew(m->list);
+
+    for (MapEntry* entry = nullptr; linkedListIteratorNext(it, (void**)&entry);) {
+        linkedListInsert(list, linkedListCount(list), strdup(entry->key), true);
+    }
+
+    linkedListIteratorFree(&it);
+    return list;
+}

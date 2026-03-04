@@ -1,3 +1,5 @@
+#include "destruct.h"
+#include "list.h"
 #include "map.h"
 #include <stdlib.h>
 #include <string.h>
@@ -244,4 +246,20 @@ void mapFree(Map** m)
     mapFree(&(*m)->greater);
     free(*m);
     *m = nullptr;
+}
+
+static void mapGetKeysRec(Map* m, LinkedList* list)
+{
+    if (m == nullptr)
+        return;
+    mapGetKeysRec(m->lesser, list);
+    linkedListInsert(list, linkedListCount(list), strdup(m->key), true);
+    mapGetKeysRec(m->greater, list);
+}
+
+LinkedList* mapGetKeys(Map* m)
+{
+    LinkedList* list = linkedListNewWithDestructor(free);
+    mapGetKeysRec(m, list);
+    return list;
 }

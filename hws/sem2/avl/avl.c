@@ -170,13 +170,22 @@ void mapDelete(Map** m, char* key)
 
     Map* node = *m;
     int cmpRes = strcmp(key, node->key);
+    int oldBalance = node->balance;
 
     if (cmpRes < 0) {
         mapDelete(&node->lesser, key);
-        node->balance++;
+        if (node->lesser == nullptr && oldBalance == 0) {
+            node->balance++;
+        } else if (node->lesser != nullptr && oldBalance == 1) {
+            node->balance = 0;
+        }
     } else if (cmpRes > 0) {
         mapDelete(&node->greater, key);
-        node->balance--;
+        if (node->greater == nullptr && oldBalance == 0) {
+            node->balance--;
+        } else if (node->greater != nullptr && oldBalance == -1) {
+            node->balance = 0;
+        }
     } else {
         if (node->lesser == nullptr && node->greater == nullptr) {
             mapFree(&node);
@@ -199,7 +208,11 @@ void mapDelete(Map** m, char* key)
             node->key = strdup(s->key);
             node->value = strdup(s->value);
             mapDelete(&node->greater, s->key);
-            node->balance--;
+            if (oldBalance == 0) {
+                node->balance--;
+            } else if (oldBalance == 1) {
+                node->balance = 0;
+            }
         }
     }
 
@@ -253,7 +266,8 @@ static void mapGetKeysRec(Map* m, LinkedList* list)
     if (m == nullptr)
         return;
     mapGetKeysRec(m->lesser, list);
-    linkedListInsert(list, linkedListCount(list), strdup(m->key), true);
+    if (m->key)
+        linkedListInsert(list, linkedListCount(list), strdup(m->key), true);
     mapGetKeysRec(m->greater, list);
 }
 

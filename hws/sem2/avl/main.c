@@ -23,7 +23,6 @@ bool runCommand(char* cmd)
     char commandName[16] = { };
     char argument[512] = { };
     sscanf(cmd, "%15[^ \n] %511[^\n]", commandName, argument);
-    printf("\"%s\" \"%s\"\n", commandName, argument);
 
     if (!strcmp(commandName, "quit"))
         return false;

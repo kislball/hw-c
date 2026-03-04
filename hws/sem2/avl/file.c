@@ -28,7 +28,6 @@ Map* mapImport(FILE* f)
 
     while (fscanf(f, "%511[^:]:%511[^\n]\n", keyBuffer, valueBuffer) == 2) {
         mapInsert(&m, keyBuffer, valueBuffer);
-        printf("Added \"%s\" -> \"%s\"\n", keyBuffer, valueBuffer);
     }
 
     return m;

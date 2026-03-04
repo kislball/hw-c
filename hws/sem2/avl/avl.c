@@ -122,81 +122,88 @@ static Map* avlBalance(Map* m)
     return m;
 }
 
-void mapInsert(Map** m, char* key, char* value)
+static bool mapInsertRec(Map** m, char* key, char* value)
 {
+    if (*m == nullptr) {
+        *m = mapNew();
+        (*m)->key = strdup(key);
+        (*m)->value = strdup(value);
+        (*m)->balance = 0;
+        return true;
+    }
+
     Map* node = *m;
     if (node->key == nullptr) {
         node->key = strdup(key);
         node->value = strdup(value);
         node->balance = 0;
-        return;
+        return true;
     }
 
     int cmpRes = strcmp(key, node->key);
+    bool taller = false;
     if (cmpRes == 0) {
         if (node->value)
             free(node->value);
         node->value = strdup(value);
-        return;
+        return false;
     } else if (cmpRes < 0) {
-        if (node->lesser) {
-            mapInsert(&node->lesser, key, value);
-        } else {
-            node->lesser = mapNew();
-            node->lesser->key = strdup(key);
-            node->lesser->value = strdup(value);
+        taller = mapInsertRec(&node->lesser, key, value);
+        if (taller) {
+            node->balance--;
         }
-        node->balance--;
     } else {
-        if (node->greater) {
-            mapInsert(&node->greater, key, value);
-        } else {
-            node->greater = mapNew();
-            node->greater->key = strdup(key);
-            node->greater->value = strdup(value);
+        taller = mapInsertRec(&node->greater, key, value);
+        if (taller) {
+            node->balance++;
         }
-        node->balance++;
     }
 
     if (node->balance == -2 || node->balance == 2) {
         *m = avlBalance(node);
+        return false;
     }
+
+    return taller;
 }
 
-void mapDelete(Map** m, char* key)
+void mapInsert(Map** m, char* key, char* value)
+{
+    mapInsertRec(m, key, value);
+}
+
+static bool mapDeleteRec(Map** m, char* key)
 {
     if (*m == nullptr)
-        return;
+        return false;
 
     Map* node = *m;
     int cmpRes = strcmp(key, node->key);
-    int oldBalance = node->balance;
+    bool shorter = false;
 
     if (cmpRes < 0) {
-        mapDelete(&node->lesser, key);
-        if (node->lesser == nullptr && oldBalance == 0) {
+        shorter = mapDeleteRec(&node->lesser, key);
+        if (shorter) {
             node->balance++;
-        } else if (node->lesser != nullptr && oldBalance == 1) {
-            node->balance = 0;
         }
     } else if (cmpRes > 0) {
-        mapDelete(&node->greater, key);
-        if (node->greater == nullptr && oldBalance == 0) {
+        shorter = mapDeleteRec(&node->greater, key);
+        if (shorter) {
             node->balance--;
-        } else if (node->greater != nullptr && oldBalance == -1) {
-            node->balance = 0;
         }
     } else {
         if (node->lesser == nullptr && node->greater == nullptr) {
             mapFree(&node);
             *m = nullptr;
-            return;
+            return true;
         } else if (node->lesser == nullptr) {
             *m = node->greater;
             mapFree(&node);
+            return true;
         } else if (node->greater == nullptr) {
             *m = node->lesser;
             mapFree(&node);
+            return true;
         } else {
             Map** succ = &node->greater;
             while ((*succ)->lesser != nullptr) {
@@ -207,18 +214,28 @@ void mapDelete(Map** m, char* key)
             free(node->value);
             node->key = strdup(s->key);
             node->value = strdup(s->value);
-            mapDelete(&node->greater, s->key);
-            if (oldBalance == 0) {
+            shorter = mapDeleteRec(&node->greater, s->key);
+            if (shorter) {
                 node->balance--;
-            } else if (oldBalance == 1) {
-                node->balance = 0;
             }
         }
     }
 
-    if (*m != nullptr && ((*m)->balance == -2 || (*m)->balance == 2)) {
-        *m = avlBalance(*m);
+    if (node->balance == -2 || node->balance == 2) {
+        *m = avlBalance(node);
+        return false;
     }
+
+    if (node->balance == -1 || node->balance == 1) {
+        return false;
+    }
+
+    return shorter;
+}
+
+void mapDelete(Map** m, char* key)
+{
+    mapDeleteRec(m, key);
 }
 
 Map* mapNew()

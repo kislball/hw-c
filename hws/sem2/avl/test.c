@@ -4,6 +4,40 @@
 #include <stdlib.h>
 #include <string.h>
 
+char* shift(char* s, char n)
+{
+    char* res = strdup(s);
+    unsigned int size = strlen(res);
+
+    for (unsigned i = 0; i < size; i++) {
+        res[i] += n; // NOLINT(cppcoreguidelines-narrowing-conversions)
+    }
+
+    return res;
+}
+
+void fuzzy()
+{
+    Map* m = mapNew();
+
+    for (int i = 0; i <= 10000; i++) {
+        char buf[32] = { };
+        sprintf(buf, "%d", i);
+
+        for (int j = 0; j < (i % 10); j++) {
+            mapInsert(&m, buf, shift(buf, i % 3)); // NOLINT
+            char* value;
+            assert(mapGet(m, buf, &value) && !strcmp(value, shift(buf, i % 3)));
+            if (j % 2 == 0) {
+                mapDelete(&m, buf);
+                assert(!mapGet(m, buf, &value));
+            }
+        }
+    }
+
+    mapFree(&m);
+}
+
 int main(void)
 {
     Map* m = mapNew();
@@ -30,5 +64,6 @@ int main(void)
 
     mapFree(&m);
     assert(m == nullptr && "Map has been freed and pointer has been nulled");
+    fuzzy();
     return 0;
 }

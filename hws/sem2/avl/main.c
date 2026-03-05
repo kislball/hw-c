@@ -7,17 +7,6 @@
 static char* fileName = nullptr;
 static Map* data = nullptr;
 
-void writeDb()
-{
-    FILE* f = fopen(fileName, "w");
-    if (!f) {
-        fprintf(stderr, "Failed to write DB: %s\n", strerror(errno));
-        exit(1);
-    }
-    mapExport(data, f);
-    fclose(f);
-}
-
 bool runCommand(char* cmd)
 {
     char commandName[16] = { };
@@ -27,7 +16,7 @@ bool runCommand(char* cmd)
     if (!strcmp(commandName, "quit"))
         return false;
     else if (!strcmp(commandName, "save")) {
-        writeDb();
+        mapWrite(data, fileName);
         return true;
     } else if (!strcmp(commandName, "delete")) {
         mapDelete(&data, argument);
@@ -56,20 +45,6 @@ bool runCommand(char* cmd)
     return true; // to avoid compiler warnings
 }
 
-void readDb()
-{
-    FILE* f = fopen(fileName, "r");
-    if (!f) {
-        fprintf(stderr, "Failed to open DB: %s\n", strerror(errno));
-        exit(1);
-    }
-
-    if (data)
-        mapFree(&data);
-    data = mapImport(f);
-    fclose(f);
-}
-
 int main(int argc, char** argv)
 {
     if (argc != 2) {
@@ -78,7 +53,7 @@ int main(int argc, char** argv)
     }
 
     fileName = argv[1];
-    readDb();
+    data = mapOpen(fileName);
 
     char buffer[512] = { };
 

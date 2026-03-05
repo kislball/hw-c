@@ -1,7 +1,9 @@
 #include "list.h"
 #include "map.h"
+#include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 void mapExport(Map* m, FILE* f)
 {
@@ -31,4 +33,27 @@ Map* mapImport(FILE* f)
     }
 
     return m;
+}
+
+void mapWrite(Map* data, char* fileName)
+{
+    FILE* f = fopen(fileName, "w");
+    if (!f) {
+        fprintf(stderr, "Failed to write DB: %s\n", strerror(errno));
+        exit(1);
+    }
+    mapExport(data, f);
+    fclose(f);
+}
+
+Map* mapOpen(char* fileName)
+{
+    FILE* f = fopen(fileName, "r");
+    if (!f) {
+        fprintf(stderr, "Failed to open DB: %s\n", strerror(errno));
+        exit(1);
+    }
+
+    fclose(f);
+    return mapImport(f);
 }

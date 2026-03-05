@@ -15,3 +15,5 @@ LinkedList* mapGetKeys(Map* m);
 
 Map* mapImport(FILE*);
 void mapExport(Map*, FILE*);
+Map* mapOpen(char*);
+void mapWrite(Map*, char*);

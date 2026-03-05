@@ -17,7 +17,7 @@ target_link_libraries(aerosoft_listmap PRIVATE stdhw)
 add_executable(bench1_avl avl.c bench1.c file.c)
 target_link_libraries(bench1_avl PRIVATE stdhw)
 
-add_executable(bench1_listmap listmap.c bench2.c file.c)
+add_executable(bench1_listmap listmap.c bench1.c file.c)
 target_link_libraries(bench1_listmap PRIVATE stdhw)
 
 add_executable(bench2_avl avl.c bench2.c file.c)

@@ -54,6 +54,7 @@ Map* mapOpen(char* fileName)
         exit(1);
     }
 
+    Map* result = mapImport(f);
     fclose(f);
-    return mapImport(f);
+    return result;
 }

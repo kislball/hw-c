@@ -38,7 +38,7 @@ void pqueueFree(PQueue** q)
 {
     PQueue* qu = *q;
     free(qu->heap);
-    free(qu);
+    free(*q);
     *q = nullptr;
 }
 

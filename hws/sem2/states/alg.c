@@ -55,7 +55,16 @@ void outputAdd(Output* output, State state)
         return;
 
     output->states = newStates;
-    output->states[output->totalStates] = state;
+
+    unsigned* citiesCopy = malloc(state.totalCities * sizeof(unsigned));
+    if (citiesCopy == nullptr)
+        return;
+    for (unsigned i = 0; i < state.totalCities; i++) {
+        citiesCopy[i] = state.cities[i];
+    }
+
+    output->states[output->totalStates].cities = citiesCopy;
+    output->states[output->totalStates].totalCities = state.totalCities;
     output->totalStates++;
 }
 

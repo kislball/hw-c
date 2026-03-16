@@ -56,7 +56,9 @@ void outputAdd(Output* output, State state)
 
     output->states = newStates;
 
-    unsigned* citiesCopy = malloc(state.totalCities * sizeof(unsigned));
+    // В государстве всегда хотя бы один город - столица
+    assert(state.totalCities != 0);
+    unsigned* citiesCopy = calloc(state.totalCities, sizeof(*citiesCopy));
     if (citiesCopy == nullptr)
         return;
     for (unsigned i = 0; i < state.totalCities; i++) {

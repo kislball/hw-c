@@ -144,6 +144,7 @@ Output* solve(Input* inp)
     for (unsigned i = 0; i < addedStates; i++) {
         outputAdd(out, *states[i]);
         stateFree(&states[i]);
+        pqueueFree(&stateQueues[i]);
     }
 
     free(states);
